@@ -1,0 +1,10 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google-login:
+            provider: google
+            client-id: 1017891805750-kb9u25phqejsrtuol1no6r7j1ep51sv8.apps.googleusercontent.com
+            client-secret: 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
+            redirectUriTemplate: "http://localhost:8080/api/google/callback"
