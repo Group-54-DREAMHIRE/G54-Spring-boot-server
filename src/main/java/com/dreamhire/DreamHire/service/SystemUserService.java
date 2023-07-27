@@ -35,11 +35,12 @@ public class SystemUserService {
     }
 
     public String changeUserPassword(ChangePasswordDTO changePasswordDTO){
-        if(!systemUserRepository.existsByPassword(passwordEncoder.encode(changePasswordDTO.getOldpassword()))){
+
+        if(!systemUserRepository.existsByEmail(changePasswordDTO.getEmail())){
             return "bad";
         }else {
             SystemUser user = new SystemUser();
-            user.setPassword(passwordEncoder.encode(changePasswordDTO.getNewpassword()));
+            user.setPassword(passwordEncoder.encode(changePasswordDTO.getNewPassword()));
             systemUserRepository.save(user);
             return "Password is changed successfully";
         }
