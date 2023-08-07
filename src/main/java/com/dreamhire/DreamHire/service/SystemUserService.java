@@ -2,8 +2,9 @@ package com.dreamhire.DreamHire.service;
 
 import com.dreamhire.DreamHire.dto.ChangePasswordDTO;
 import com.dreamhire.DreamHire.dto.RegisterDto;
+import com.dreamhire.DreamHire.model.Candidate;
 import com.dreamhire.DreamHire.model.SystemUser;
-import com.dreamhire.DreamHire.repository.SystemUserRepository;
+import com.dreamhire.DreamHire.repository.SystemUserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,13 +14,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class SystemUserService {
     @Autowired
-    private SystemUserRepository systemUserRepository;
+    private SystemUserRepo systemUserRepo;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     public String registerSystemUser(RegisterDto register) {
-        if (systemUserRepository.existsByEmail(register.getEmail())) {
+        if (systemUserRepo.existsByEmail(register.getEmail())) {
             return "bad";
         } else if(register.getUserType().toString().equals("admin")){
             return "reject";
@@ -29,19 +30,19 @@ public class SystemUserService {
             user.setEmail(register.getEmail());
             user.setPassword(passwordEncoder.encode(register.getPassword()));
             user.setUserType(register.getUserType());
-            systemUserRepository.save(user);
+            systemUserRepo.save(user);
             return "User is registered successfully";
         }
     }
 
     public String changeUserPassword(ChangePasswordDTO changePasswordDTO){
 
-        if(!systemUserRepository.existsByEmail(changePasswordDTO.getEmail())){
+        if(!systemUserRepo.existsByEmail(changePasswordDTO.getEmail())){
             return "bad";
         }else {
-            SystemUser user = new SystemUser();
+            SystemUser user = systemUserRepo.findByEmail(changePasswordDTO.getEmail()).get();
             user.setPassword(passwordEncoder.encode(changePasswordDTO.getNewPassword()));
-            systemUserRepository.save(user);
+            systemUserRepo.save(user);
             return "Password is changed successfully";
         }
     }

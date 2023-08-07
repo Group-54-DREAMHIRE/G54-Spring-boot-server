@@ -3,7 +3,6 @@ import lombok.*;
 
 
 import javax.persistence.*;
-
 @Inheritance(strategy = InheritanceType.JOINED)
 @Entity
 @Table(name = "systemusers")
@@ -15,8 +14,6 @@ import javax.persistence.*;
 @ToString
 public  class SystemUser {
 
-
-    @Column
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -24,18 +21,7 @@ public  class SystemUser {
     @Column(unique = true)
     private String email;
     private String password;
-    private String address;
-    private String phone;
     @Enumerated(value = EnumType.STRING)
     private UserType userType;
-    private String profilePicture;
-    private String description;
-    private String city;
-    private String title;
-
-
-
-
-
 
 }
