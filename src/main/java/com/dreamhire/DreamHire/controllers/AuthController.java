@@ -4,8 +4,7 @@ import com.dreamhire.DreamHire.dto.AuthResponseDTO;
 import com.dreamhire.DreamHire.dto.LoginDto;
 import com.dreamhire.DreamHire.dto.RegisterDto;
 import com.dreamhire.DreamHire.model.SystemUser;
-import com.dreamhire.DreamHire.model.UserType;
-import com.dreamhire.DreamHire.repository.SystemUserRepository;
+import com.dreamhire.DreamHire.repository.SystemUserRepo;
 import com.dreamhire.DreamHire.security.JWTGenerator;
 import com.dreamhire.DreamHire.service.SystemUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 
 @CrossOrigin
@@ -31,13 +27,13 @@ public class AuthController {
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
-    private SystemUserRepository systemUserRepository;
+    private SystemUserRepo systemUserRepo;
     @Autowired
     private JWTGenerator jwtGenerator;
 
 
     @PostMapping("login")
-    public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<?> login(@RequestBody LoginDto loginDto) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginDto.getEmail(),
@@ -45,8 +41,10 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String token = jwtGenerator.generateToken(authentication);
-        SystemUser user = systemUserRepository.findByEmail(loginDto.getEmail()).get();
-        return new ResponseEntity<>(new AuthResponseDTO(token, user ), HttpStatus.OK);
+        SystemUser user = systemUserRepo.findByEmail(loginDto.getEmail()).get();
+        return new ResponseEntity<>(new AuthResponseDTO(token,user), HttpStatus.OK);
+
+
     }
 
     @PostMapping("register")
