@@ -18,6 +18,7 @@ public class Candidate {
     private Date birthday;
     private String city;
     private String name;
+    private boolean visible = true;
     private String profilePicture;
     private String description;
     private String phone;
@@ -26,12 +27,10 @@ public class Candidate {
     private String facebook;
     private String twitter;
     private String linkedIn;
+    private String currency;
+    private String minSalary;
+    private String maxSalary;
 
-
-//    @Convert(converter = MoneyConvertor.class)
-//    private MonetaryAmount minSalary;
-//    @Convert(converter = MoneyConvertor.class)
-//    private MonetaryAmount maxSalary;
 
 
 
@@ -43,6 +42,9 @@ public class Candidate {
     public Candidate(CandidateDataDTO data) {
         this.title = data.getTitle();
         this.birthday = data.getBirthday();
+        this.currency = data.getCurrency();
+        this.minSalary = data.getMinSalary();
+        this.maxSalary = data.getMaxSalary();
         this.city = data.getCity();
         this.name = data.getName();
         this.profilePicture = data.getProfilePicture();
@@ -53,6 +55,6 @@ public class Candidate {
         this.facebook = data.getFacebook();
         this.twitter = data.getTwitter();
         this.linkedIn = data.getLinkedIn();
-
+        this.visible = data.isVisible();
     }
 }

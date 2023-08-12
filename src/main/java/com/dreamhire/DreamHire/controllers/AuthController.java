@@ -1,9 +1,13 @@
 package com.dreamhire.DreamHire.controllers;
 
-import com.dreamhire.DreamHire.dto.AuthResponseDTO;
-import com.dreamhire.DreamHire.dto.LoginDto;
-import com.dreamhire.DreamHire.dto.RegisterDto;
+import com.dreamhire.DreamHire.dto.*;
+import com.dreamhire.DreamHire.model.Admin;
+import com.dreamhire.DreamHire.model.Candidate;
+import com.dreamhire.DreamHire.model.Company;
 import com.dreamhire.DreamHire.model.SystemUser;
+import com.dreamhire.DreamHire.repository.AdminRepo;
+import com.dreamhire.DreamHire.repository.CandidateRepo;
+import com.dreamhire.DreamHire.repository.CompanyRepo;
 import com.dreamhire.DreamHire.repository.SystemUserRepo;
 import com.dreamhire.DreamHire.security.JWTGenerator;
 import com.dreamhire.DreamHire.service.SystemUserService;
@@ -29,6 +33,12 @@ public class AuthController {
     @Autowired
     private SystemUserRepo systemUserRepo;
     @Autowired
+    private CandidateRepo candidateRepo;
+    @Autowired
+    private CompanyRepo companyRepo;
+    @Autowired
+    private AdminRepo adminRepo;
+    @Autowired
     private JWTGenerator jwtGenerator;
 
 
@@ -41,8 +51,20 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String token = jwtGenerator.generateToken(authentication);
-        SystemUser user = systemUserRepo.findByEmail(loginDto.getEmail()).get();
-        return new ResponseEntity<>(new AuthResponseDTO(token,user), HttpStatus.OK);
+        String userType = systemUserRepo.findByEmail(loginDto.getEmail()).get().getUserType().toString();
+        if(userType == "candidate"){
+            Candidate candidate = candidateRepo.findBySystemUserId(systemUserRepo.findByEmail(loginDto.getEmail()).get().getId());
+            return ResponseEntity.ok(new SendCandidateDTO(candidate,token, userType));
+        }
+        if(userType == "company"){
+            Company company = companyRepo.findBySystemUserId(systemUserRepo.findByEmail(loginDto.getEmail()).get().getId());
+            return ResponseEntity.ok(new SendCompanyDTO(company,token, userType));
+        }
+        if(userType == "admin"){
+            Admin admin = adminRepo.findBySystemUserId(systemUserRepo.findByEmail(loginDto.getEmail()).get().getId());
+            return ResponseEntity.ok(new SendAdminDTO(admin,token, userType));
+        }
+        return new ResponseEntity<>("User Data is invalid", HttpStatus.BAD_REQUEST);
 
 
     }

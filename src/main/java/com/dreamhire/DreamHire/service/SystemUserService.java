@@ -3,7 +3,10 @@ package com.dreamhire.DreamHire.service;
 import com.dreamhire.DreamHire.dto.ChangePasswordDTO;
 import com.dreamhire.DreamHire.dto.RegisterDto;
 import com.dreamhire.DreamHire.model.Candidate;
+import com.dreamhire.DreamHire.model.Company;
 import com.dreamhire.DreamHire.model.SystemUser;
+import com.dreamhire.DreamHire.repository.CandidateRepo;
+import com.dreamhire.DreamHire.repository.CompanyRepo;
 import com.dreamhire.DreamHire.repository.SystemUserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,6 +18,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class SystemUserService {
     @Autowired
     private SystemUserRepo systemUserRepo;
+    @Autowired
+    private CandidateRepo candidateRepo;
+    @Autowired
+    private CompanyRepo companyRepo;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -31,6 +38,17 @@ public class SystemUserService {
             user.setPassword(passwordEncoder.encode(register.getPassword()));
             user.setUserType(register.getUserType());
             systemUserRepo.save(user);
+            if(register.getUserType().toString()=="candidate"){
+                Candidate candidate = new Candidate();
+                candidate.setSystemUser(systemUserRepo.findByEmail(register.getEmail()).get());
+                candidateRepo.save(candidate);
+            }
+            if(register.getUserType().toString()=="company"){
+                Company company = new Company();
+                company.setSystemUser(systemUserRepo.findByEmail(register.getEmail()).get());
+                companyRepo.save(company);
+
+            }
             return "User is registered successfully";
         }
     }
