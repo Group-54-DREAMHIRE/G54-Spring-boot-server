@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -39,6 +40,7 @@ public class JobPost {
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;
+
 
     public JobPost(JobPost post) {
 

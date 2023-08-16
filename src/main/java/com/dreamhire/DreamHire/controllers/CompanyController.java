@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
 
 @CrossOrigin
@@ -22,7 +23,7 @@ public class CompanyController {
     CompanyRepo companyRepo;
 
    @PostMapping("/save/{id}")
-    public ResponseEntity<String> saveCompany(@PathVariable int id, @RequestBody CompanyDataDTO companyData){
+    public ResponseEntity<?> saveCompany(@PathVariable int id, @RequestBody CompanyDataDTO companyData){
         if(companyRepo.existsById(id)){
             Company company = companyRepo.findById(id);
            company.setName(companyData.getName());
@@ -38,8 +39,9 @@ public class CompanyController {
            company.setTwitter(companyData.getTwitter());
            company.setLinkedIn(companyData.getLinkedIn());
            companyRepo.save(company);
+            return new ResponseEntity<>(company, HttpStatus.OK);
         }
-       return new ResponseEntity<>("Successfully updated", HttpStatus.OK);
+       return new ResponseEntity<>("Data is invalid", HttpStatus.BAD_REQUEST);
    }
 
     @GetMapping("/get/{id}")
@@ -50,5 +52,10 @@ public class CompanyController {
         }else {
             return new ResponseEntity<>("User details is invalid",HttpStatus.BAD_REQUEST);
         }
+    }
+    @GetMapping("/getAllCompanies")
+    public ResponseEntity<List> getAllCompanies(){
+       List <Company> companies = companyRepo.getAllApprovedVisibleCompanies();
+       return new ResponseEntity<List>(companies, HttpStatus.OK);
     }
 }
