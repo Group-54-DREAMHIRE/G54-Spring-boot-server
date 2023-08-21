@@ -19,18 +19,26 @@ public class Company {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
+    @Column(columnDefinition = "TEXT")
     private String description;
+    @Column(length = 4000)
     private String about;
+    @Column(length = 4000)
     private String services;
+    @Column(length = 4000)
     private String serviceKeys;
     private boolean visible = true;
     private boolean approval = false;
     private boolean payment = false;
     private String phone;
     private String email;
+    @Column(length = 500)
     private String address;
+    @Column(length = 500)
     private String facebook;
+    @Column(length = 500)
     private String twitter;
+    @Column(length = 500)
     private String linkedIn;
 
     @ManyToOne

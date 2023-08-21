@@ -27,13 +27,15 @@ public class ApplyJobCandidate {
     @JoinColumn(name = "can_id")
     private Candidate candidate;
 
-    private String status = "pending";
+    @Enumerated(value = EnumType.STRING)
+    private CandidateType candidateType;
     private String candidateName;
     private String candidatePhone;
     private String candidateEmail;
     private String candidateCity;
     private String currency;
     private String expectSalary;
+    @Column(length = 500)
     private String tags;
 
     public ApplyJobCandidate(ApplyJobDTO applyJob) {
