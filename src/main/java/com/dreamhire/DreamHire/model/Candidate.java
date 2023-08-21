@@ -20,12 +20,17 @@ public class Candidate {
     private String name;
     private boolean visible = true;
     private String profilePicture;
+    @Column(columnDefinition = "TEXT")
     private String description;
     private String phone;
     private String email;
+    @Column(length = 500)
     private String address;
+    @Column(length = 500)
     private String facebook;
+    @Column(length = 500)
     private String twitter;
+    @Column(length = 500)
     private String linkedIn;
     private String currency;
     private String minSalary;

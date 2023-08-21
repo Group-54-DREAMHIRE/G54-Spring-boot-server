@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,12 +26,17 @@ public class JobPost {
     private String experience;
     private String education;
     private Date deadline;
+    @Column(columnDefinition = "TEXT")
     private String description;
+    @Column(columnDefinition = "TEXT")
     private String howToApply;
+    @Column(columnDefinition = "TEXT")
     private String jobRequirements;
+    @Column(length = 500)
     private String tags;
     private String author;
     private boolean validate=true;
+    @Column(length = 500)
     private String cover;
     private String currency;
     private String minSalary;
@@ -39,6 +45,7 @@ public class JobPost {
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;
+
 
     public JobPost(JobPost post) {
 
@@ -56,8 +63,7 @@ public class JobPost {
         this.cover = post.cover;
         this.currency = post.currency;
         this.minSalary = post.minSalary;
-        this.maxSalary = post.maxSalary;
-    }
+        this.maxSalary = post.maxSalary; }
 
     public void getAuthor(String email) {
         this.author = email;

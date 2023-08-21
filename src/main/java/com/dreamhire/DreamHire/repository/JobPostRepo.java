@@ -10,7 +10,7 @@ public interface JobPostRepo extends JpaRepository<JobPost, Integer> {
 
     JobPost findById(int id);
 
-    @Query(value = "SELECT * FROM jobpost WHERE validate=true ", nativeQuery = true)
+    @Query(value = "SELECT * FROM jobpost WHERE validate=true  ", nativeQuery = true)
     List<JobPost> getAllValidateJobPosts();
 
 }

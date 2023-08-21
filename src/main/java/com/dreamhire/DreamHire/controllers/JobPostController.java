@@ -27,7 +27,7 @@ public class JobPostController {
     private JobPostRepo jobPostRepo;
 
     @PostMapping("/save/{id}")
-    public ResponseEntity<String> addJobPost (@PathVariable int id, @RequestBody JobPostDTO post){
+    public ResponseEntity<?> addJobPost (@PathVariable int id, @RequestBody JobPostDTO post){
             JobPost jobPost = new JobPost();
             jobPost.setAuthor(systemUserRepo.findById(post.getSystemUserID()).get().getEmail());
             jobPost.setCompanyName(post.getCompanyName());
@@ -47,7 +47,7 @@ public class JobPostController {
             jobPost.setTags(post.getTags());
             jobPost.setCompany(companyRepo.findById(id));
             jobPostRepo.save(jobPost);
-            return new ResponseEntity<>("Job post is saved successfully", HttpStatus.OK);
+            return new ResponseEntity<>(jobPost, HttpStatus.OK);
 
     }
 

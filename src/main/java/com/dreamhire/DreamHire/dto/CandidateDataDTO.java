@@ -8,7 +8,6 @@ import java.util.Date;
 
 public class CandidateDataDTO {
 
-    private int userId;
     private String email;
     private String name;
     private boolean visible;

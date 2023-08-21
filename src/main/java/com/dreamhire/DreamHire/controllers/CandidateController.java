@@ -3,6 +3,7 @@ package com.dreamhire.DreamHire.controllers;
 import com.dreamhire.DreamHire.dto.CandidateDataDTO;
 import com.dreamhire.DreamHire.model.Candidate;
 
+import com.dreamhire.DreamHire.model.Company;
 import com.dreamhire.DreamHire.repository.CandidateRepo;
 import com.dreamhire.DreamHire.repository.SystemUserRepo;
 
@@ -11,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @CrossOrigin
@@ -24,9 +27,9 @@ public class CandidateController {
     private CandidateRepo candidateRepo;
 
    @PostMapping("/save/{id}")
-    public ResponseEntity<String> saveCandidate(@PathVariable int id, @RequestBody CandidateDataDTO data){
-        if(candidateRepo.existsBySystemUserId(id)){
-            Candidate candidate = candidateRepo.findBySystemUserId(id);
+    public ResponseEntity<?> saveCandidate(@PathVariable int id, @RequestBody CandidateDataDTO data){
+        if(candidateRepo.existsById(id)){
+            Candidate candidate = candidateRepo.findById(id);
             candidate.setName(data.getName());
             candidate.setCurrency(data.getCurrency());
             candidate.setMinSalary(data.getMinSalary());
@@ -45,8 +48,11 @@ public class CandidateController {
             candidate.setTwitter(data.getTwitter());
             candidate.setLinkedIn(data.getLinkedIn());
             candidateRepo.save(candidate);
+            return new ResponseEntity<>(candidate, HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>("Data is invalid", HttpStatus.BAD_REQUEST);
         }
-       return new ResponseEntity<>("Successfully updated", HttpStatus.OK);
+
    }
 
    @GetMapping("/get/{id}")
@@ -59,5 +65,9 @@ public class CandidateController {
        }
    }
 
-
+    @GetMapping("/getAllCandidates")
+    public ResponseEntity<List> getAllCandidates(){
+        List <Candidate> candidates = candidateRepo.getAllVisibleCandidates();
+        return new ResponseEntity<List>(candidates, HttpStatus.OK);
+    }
 }
