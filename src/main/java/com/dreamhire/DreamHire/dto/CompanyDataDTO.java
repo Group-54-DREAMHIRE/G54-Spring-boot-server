@@ -7,6 +7,8 @@ import lombok.Data;
 public class CompanyDataDTO {
     private String email;
     private String name;
+    private String logo;
+    private String images;
     private String description;
     private String about;
     private String services;

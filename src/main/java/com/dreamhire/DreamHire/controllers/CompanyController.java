@@ -27,6 +27,8 @@ public class CompanyController {
         if(companyRepo.existsById(id)){
             Company company = companyRepo.findById(id);
            company.setName(companyData.getName());
+           company.setLogo(companyData.getLogo());
+           company.setImages(companyData.getImages());
            company.setDescription(companyData.getDescription());
            company.setAbout(companyData.getAbout());
            company.setServices(companyData.getServices());
