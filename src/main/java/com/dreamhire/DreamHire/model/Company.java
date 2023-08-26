@@ -43,6 +43,8 @@ public class Company {
     private String twitter;
     @Column(length = 500)
     private String linkedIn;
+    @Column(length = 500)
+    private String registration;
 
     @ManyToOne
     @JoinColumn(name = "system_user_id")

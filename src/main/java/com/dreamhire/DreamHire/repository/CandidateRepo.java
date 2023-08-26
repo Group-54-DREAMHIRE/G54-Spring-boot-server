@@ -14,6 +14,6 @@ public interface CandidateRepo extends JpaRepository <Candidate,Integer>{
     Candidate findBySystemUserId(int id);
     Candidate findById(int id);
 
-    @Query(value = "SELECT * FROM companies WHERE visibla= true", nativeQuery = true)
+    @Query(value = "SELECT * FROM candidates WHERE visible= true", nativeQuery = true)
     List<Candidate> getAllVisibleCandidates();
 }

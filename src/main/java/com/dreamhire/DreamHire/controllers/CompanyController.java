@@ -1,6 +1,7 @@
 package com.dreamhire.DreamHire.controllers;
 
 import com.dreamhire.DreamHire.dto.CompanyDataDTO;
+import com.dreamhire.DreamHire.dto.RegistrationDTO;
 import com.dreamhire.DreamHire.model.Candidate;
 import com.dreamhire.DreamHire.model.Company;
 import com.dreamhire.DreamHire.repository.CompanyRepo;
@@ -60,4 +61,17 @@ public class CompanyController {
        List <Company> companies = companyRepo.getAllApprovedVisibleCompanies();
        return new ResponseEntity<List>(companies, HttpStatus.OK);
     }
+
+    @PostMapping("/saveBR/{id}")
+    public ResponseEntity<?> saveBR(@PathVariable int id, @RequestBody String registration){
+       if(companyRepo.existsById(id)){
+           Company company = companyRepo.findById(id);
+           company.setRegistration(registration);
+           companyRepo.save(company);
+           return new ResponseEntity<>("Register is successfully", HttpStatus.OK);
+       }else {
+           return new ResponseEntity<>("Invalid Data!", HttpStatus.BAD_REQUEST);
+       }
+    }
+
 }
