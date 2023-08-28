@@ -23,13 +23,15 @@ public class AdminController {
     CompanyRepo companyRepo;
 
     @PostMapping("/save/{id}")
-    public ResponseEntity<String> saveAdmin(@PathVariable int id, @RequestBody Admin admin) {
-        if (adminRepo.existsBySystemUserId(id)) {
-            Admin admin1 = adminRepo.findBySystemUserId(id);
+    public ResponseEntity<?> saveAdmin(@PathVariable int id, @RequestBody Admin admin) {
+        if (adminRepo.existsById(id)) {
+            Admin admin1 = adminRepo.findById(id);
             admin1.setEmail(admin.getEmail());
             admin1.setPhone(admin.getPhone());
+            admin1.setName(admin.getName());
+            admin1.setProfilePicture(admin.getProfilePicture());
             adminRepo.save(admin1);
-            return new ResponseEntity<>("Updated successfully", HttpStatus.OK);
+            return new ResponseEntity<>(admin1, HttpStatus.OK);
         } else {
             return new ResponseEntity<>("Data is invalid", HttpStatus.BAD_REQUEST);
         }

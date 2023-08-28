@@ -17,8 +17,11 @@ public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private String name;
     private String email;
     private String phone;
+    private String profilePicture;
+
 
     @ManyToOne
     @JoinColumn(name = "system_user_id")

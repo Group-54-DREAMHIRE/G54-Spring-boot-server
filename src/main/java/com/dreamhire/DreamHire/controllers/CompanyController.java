@@ -63,10 +63,10 @@ public class CompanyController {
     }
 
     @PostMapping("/saveBR/{id}")
-    public ResponseEntity<?> saveBR(@PathVariable int id, @RequestBody String registration){
+    public ResponseEntity<?> saveBR(@PathVariable int id, @RequestBody RegistrationDTO registration){
        if(companyRepo.existsById(id)){
            Company company = companyRepo.findById(id);
-           company.setRegistration(registration);
+           company.setRegistration(registration.getRegistration());
            companyRepo.save(company);
            return new ResponseEntity<>("Register is successfully", HttpStatus.OK);
        }else {
