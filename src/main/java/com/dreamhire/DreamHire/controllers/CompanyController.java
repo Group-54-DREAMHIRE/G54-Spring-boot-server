@@ -48,7 +48,7 @@ public class CompanyController {
    }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<?> getCandidate(@PathVariable int id){
+    public ResponseEntity<?> getCompany(@PathVariable int id){
         if(companyRepo.existsById(id)){
             Company company = companyRepo.findById(id);
             return ResponseEntity.ok(company);
@@ -72,6 +72,12 @@ public class CompanyController {
        }else {
            return new ResponseEntity<>("Invalid Data!", HttpStatus.BAD_REQUEST);
        }
+    }
+
+    @GetMapping("/getPendingApprovals")
+    public ResponseEntity<?> getPendingApprovalList(){
+       List <Company> company = companyRepo.getPendingApprovalList();
+       return new ResponseEntity<>(company, HttpStatus.OK);
     }
 
 }

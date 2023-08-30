@@ -17,4 +17,7 @@ public interface CompanyRepo extends JpaRepository<Company, Integer> {
 
     @Query(value = "SELECT * FROM companies WHERE approval=true AND visible= true", nativeQuery = true)
     List<Company> getAllApprovedVisibleCompanies();
+
+    @Query(value = "SELECT * FROM companies WHERE approval=false AND registration IS NOT NULL ", nativeQuery = true)
+    List<Company> getPendingApprovalList();
 }

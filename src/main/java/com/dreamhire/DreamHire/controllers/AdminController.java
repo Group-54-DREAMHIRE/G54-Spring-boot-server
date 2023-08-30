@@ -38,12 +38,22 @@ public class AdminController {
 
     }
 
-    @PostMapping("approve/company/{id}")
-    public ResponseEntity<String> approveCompany(@PathVariable int id){
+    @PostMapping("/approve/company/{id}")
+    public ResponseEntity<String> approveCompany(@PathVariable int id, @RequestBody String approve){
         if(companyRepo.existsById(id)){
             Company company = companyRepo.findById(id);
             company.setApproval(true);
-            return new ResponseEntity<>("Approved", HttpStatus.OK);
+            companyRepo.save(company);
+            return new ResponseEntity<>("Approved Successfully", HttpStatus.OK);
+        }else return new ResponseEntity<>("Invalid Data", HttpStatus.BAD_REQUEST);
+    }
+    @PostMapping("/reject/company/{id}")
+    public ResponseEntity<String> rejectCompany(@PathVariable int id, @RequestBody String reject){
+        if(companyRepo.existsById(id)){
+            Company company = companyRepo.findById(id);
+            company.setReject(true);
+            companyRepo.save(company);
+            return new ResponseEntity<>("Rejected Successfully", HttpStatus.OK);
         }else return new ResponseEntity<>("Invalid Data", HttpStatus.BAD_REQUEST);
     }
 }

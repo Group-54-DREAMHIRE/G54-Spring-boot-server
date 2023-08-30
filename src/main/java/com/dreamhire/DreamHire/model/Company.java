@@ -33,6 +33,7 @@ public class Company {
     private boolean visible = true;
     private boolean approval = false;
     private boolean payment = false;
+    private boolean reject = false;
     private String phone;
     private String email;
     @Column(length = 500)
