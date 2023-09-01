@@ -14,7 +14,7 @@ class DreamHireApplicationTests {
 
 	@Test
 	void contextLoads() {
-		String password = passwordEncoder.encode("admin");
+		String password = passwordEncoder.encode("pavithra");
 		System.out.println(password);
 	}
 

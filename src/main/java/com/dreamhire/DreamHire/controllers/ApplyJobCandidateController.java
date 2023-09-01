@@ -1,6 +1,7 @@
 package com.dreamhire.DreamHire.controllers;
 
 import com.dreamhire.DreamHire.dto.ApplyJobDTO;
+import com.dreamhire.DreamHire.dto.SendCandidateResumeDTO;
 import com.dreamhire.DreamHire.model.ApplyJobCandidate;
 import com.dreamhire.DreamHire.repository.ApplyJobCandidateRepo;
 import com.dreamhire.DreamHire.repository.CandidateRepo;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -29,6 +32,50 @@ public class ApplyJobCandidateController {
         applyJobCandidate.setCandidate(candidateRepo.findById(id));
         applyJobCandidateRepo.save(applyJobCandidate);
         return new ResponseEntity<>("Apply is successfully", HttpStatus.OK);
+    }
+
+    @GetMapping("/getPendingCandidates/{id}")
+    public ResponseEntity<?> getPendingCandidates(@RequestParam int id){
+        if(jobPostRepo.existsById(id)){
+            List <SendCandidateResumeDTO> applyJobCandidate = applyJobCandidateRepo.getPendingResumes(id);
+            return new ResponseEntity<>(applyJobCandidate, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>("There is no job post given id", HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+    @GetMapping("/getShortListedCandidates/{id}")
+    public ResponseEntity<?> getShortListCandidates(@RequestParam int id){
+        if(jobPostRepo.existsById(id)){
+            List <SendCandidateResumeDTO> applyJobCandidate = applyJobCandidateRepo.getShortListResumes(id);
+            return new ResponseEntity<>(applyJobCandidate, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>("There is no job post given id", HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+    @GetMapping("/getRejectedCandidates/{id}")
+    public ResponseEntity<?> getRejectedCandidates(@RequestParam int id){
+        if(jobPostRepo.existsById(id)){
+            List <SendCandidateResumeDTO> applyJobCandidate = applyJobCandidateRepo.getRejectedResumes(id);
+            return new ResponseEntity<>(applyJobCandidate, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>("There is no job post given id", HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+    @GetMapping("/getCanceledCandidates/{id}")
+    public ResponseEntity<?> getCanceledCandidates(@RequestParam int id){
+        if(jobPostRepo.existsById(id)){
+            List <SendCandidateResumeDTO> applyJobCandidate = applyJobCandidateRepo.getCanceledResumes(id);
+            return new ResponseEntity<>(applyJobCandidate, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>("There is no job post given id", HttpStatus.BAD_REQUEST);
+        }
+
     }
 
 }
