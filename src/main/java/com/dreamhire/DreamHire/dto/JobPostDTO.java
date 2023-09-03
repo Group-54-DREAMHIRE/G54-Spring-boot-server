@@ -22,5 +22,6 @@ public class JobPostDTO {
     private String currency;
     private String minSalary;
     private String maxSalary;
+    private int numberOfVacancies;
 
 }

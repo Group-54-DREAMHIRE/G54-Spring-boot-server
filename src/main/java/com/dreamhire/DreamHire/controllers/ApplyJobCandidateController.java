@@ -35,7 +35,7 @@ public class ApplyJobCandidateController {
     }
 
     @GetMapping("/getPendingCandidates/{id}")
-    public ResponseEntity<?> getPendingCandidates(@RequestParam int id){
+    public ResponseEntity<?> getPendingCandidates(@PathVariable int id){
         if(jobPostRepo.existsById(id)){
             List <SendCandidateResumeDTO> applyJobCandidate = applyJobCandidateRepo.getPendingResumes(id);
             return new ResponseEntity<>(applyJobCandidate, HttpStatus.OK);
@@ -46,7 +46,7 @@ public class ApplyJobCandidateController {
     }
 
     @GetMapping("/getShortListedCandidates/{id}")
-    public ResponseEntity<?> getShortListCandidates(@RequestParam int id){
+    public ResponseEntity<?> getShortListCandidates(@PathVariable int id){
         if(jobPostRepo.existsById(id)){
             List <SendCandidateResumeDTO> applyJobCandidate = applyJobCandidateRepo.getShortListResumes(id);
             return new ResponseEntity<>(applyJobCandidate, HttpStatus.OK);
@@ -57,7 +57,7 @@ public class ApplyJobCandidateController {
     }
 
     @GetMapping("/getRejectedCandidates/{id}")
-    public ResponseEntity<?> getRejectedCandidates(@RequestParam int id){
+    public ResponseEntity<?> getRejectedCandidates(@PathVariable int id){
         if(jobPostRepo.existsById(id)){
             List <SendCandidateResumeDTO> applyJobCandidate = applyJobCandidateRepo.getRejectedResumes(id);
             return new ResponseEntity<>(applyJobCandidate, HttpStatus.OK);
@@ -68,7 +68,7 @@ public class ApplyJobCandidateController {
     }
 
     @GetMapping("/getCanceledCandidates/{id}")
-    public ResponseEntity<?> getCanceledCandidates(@RequestParam int id){
+    public ResponseEntity<?> getCanceledCandidates(@PathVariable int id){
         if(jobPostRepo.existsById(id)){
             List <SendCandidateResumeDTO> applyJobCandidate = applyJobCandidateRepo.getCanceledResumes(id);
             return new ResponseEntity<>(applyJobCandidate, HttpStatus.OK);
@@ -76,6 +76,17 @@ public class ApplyJobCandidateController {
             return new ResponseEntity<>("There is no job post given id", HttpStatus.BAD_REQUEST);
         }
 
+    }
+
+    @GetMapping("/getAppliedJobs/{id}")
+    public ResponseEntity<?> getAppliedJobs(@PathVariable int id){
+        if(candidateRepo.existsById(id)){
+           List <ApplyJobCandidate> applyJobCandidate = applyJobCandidateRepo.findByCandidateId(id);
+           return new ResponseEntity<>(applyJobCandidate,HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
 }

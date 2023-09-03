@@ -21,4 +21,6 @@ public interface ApplyJobCandidateRepo extends JpaRepository<ApplyJobCandidate, 
 
     @Query(value = "SELECT AJC.candidate_name, AJC.candidate_city, AJC.currency, AJC.expect_salary, AJC.tags, CAN.title, CAN.id  AS canID FROM apply_job_Candidate AJC WHERE candidateType = 'cancel' JOIN candidates CAN ON AJC.id = CAN.id JOIN jobpost JOB WHERE JOB.id = id ON JOB.id = AJC.id", nativeQuery = true)
     List<SendCandidateResumeDTO> getCanceledResumes(int id);
+
+    List<ApplyJobCandidate> findByCandidateId(int id);
 }

@@ -41,6 +41,7 @@ public class JobPost {
     private String currency;
     private String minSalary;
     private String maxSalary;
+    private int numberOfVacancies;
 
     @ManyToOne
     @JoinColumn(name = "company_id")
