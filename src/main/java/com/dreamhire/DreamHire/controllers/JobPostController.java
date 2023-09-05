@@ -73,7 +73,7 @@ public class JobPostController {
 
     @GetMapping("/getAllJobsByCompanyId/{id}")
     public ResponseEntity<?> getAllJobsByCompanyId(@PathVariable int id){
-        List<PostedJobsDTO> jobs = customDataRepo.getPostedJobsByCompanyId(id);
+        List<JobPost> jobs = jobPostRepo.getJobPostsByCompanyId(id);
         System.out.println(jobs);
         return new ResponseEntity<>( jobs,HttpStatus.OK);
     }
