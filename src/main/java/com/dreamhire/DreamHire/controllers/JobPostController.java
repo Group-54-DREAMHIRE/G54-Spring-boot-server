@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -76,5 +77,26 @@ public class JobPostController {
         List<JobPost> jobs = jobPostRepo.getJobPostsByCompanyId(id);
         System.out.println(jobs);
         return new ResponseEntity<>( jobs,HttpStatus.OK);
+    }
+
+    @GetMapping("/getjobs/{id}")
+    public ResponseEntity<?> getAllJobsByCompany(@PathVariable int id){
+        List<Object[]> jobs = jobPostRepo.getJobs(id);
+        List<PostedJobsDTO> postedJobs = new ArrayList<PostedJobsDTO>();
+        System.out.println(jobs);
+        for (Object[] job : jobs) {
+            PostedJobsDTO postedJob = new PostedJobsDTO();
+            postedJob.setJobPostId((int) job[0]);
+            postedJob.setJobTitle((String) job[1]);
+            postedJob.setTags((String) job[2]);
+            postedJob.setValidate((boolean) job[3]);
+            postedJob.setDeadline((Date) job[4]);
+            postedJob.setNumberOfVacancies((int) job[5]);
+            postedJob.setNumberOfApplicants((BigInteger) job[6]);
+
+            postedJobs.add(postedJob);
+
+        }
+        return new ResponseEntity<>( postedJobs,HttpStatus.OK);
     }
 }

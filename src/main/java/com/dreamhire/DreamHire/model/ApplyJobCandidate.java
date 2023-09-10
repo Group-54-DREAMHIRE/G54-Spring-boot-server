@@ -28,13 +28,14 @@ public class ApplyJobCandidate {
     private Candidate candidate;
 
     @Enumerated(value = EnumType.STRING)
-    private CandidateType candidateType;
+    private CandidateType candidateType=CandidateType.pending;
     private String candidateName;
     private String candidatePhone;
     private String candidateEmail;
     private String candidateCity;
-    private String currency;
-    private String expectSalary;
+    private String currency="$USD";
+    private String expectSalary="500";
+    private String jobTitle;
     @Column(length = 500)
     private String tags;
 
@@ -43,8 +44,7 @@ public class ApplyJobCandidate {
         this.candidatePhone = applyJob.getCandidatePhone();
         this.candidateEmail = applyJob.getCandidateEmail();
         this.candidateCity = applyJob.getCandidateCity();
-        this.currency = applyJob.getCurrency();
-        this.expectSalary = applyJob.getExpectSalary();
+        this.jobTitle = applyJob.getJobTitle();
         this.tags = applyJob.getTags();
     }
 }
