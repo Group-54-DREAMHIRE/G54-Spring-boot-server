@@ -9,7 +9,6 @@ public class ApplyJobDTO {
     private String candidatePhone;
     private String candidateEmail;
     private String candidateCity;
-    private String currency;
-    private String expectSalary;
     private String tags;
+    private String jobTitle;
 }
