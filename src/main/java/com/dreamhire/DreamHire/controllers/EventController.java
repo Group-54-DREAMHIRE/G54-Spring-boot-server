@@ -10,7 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin
+import java.util.List;
+
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("api/v1/event")
 public class EventController {
@@ -21,9 +23,20 @@ public class EventController {
 
     @PostMapping("/save/{id}")
     public ResponseEntity<?> saveEvent(@PathVariable int id, @RequestBody EventDTO eventDTO){
-        Event event = new Event(eventDTO);
+        Event event = new Event();
         event.setCompany(companyRepo.findById(eventDTO.getCompanyID()));
+        event.setCompanyName(eventDTO.getCompanyName());
+        event.setTitle(eventDTO.getTitle());
+        event.setStartTime(eventDTO.getStartTime());
+        event.setEndTime(eventDTO.getEndTime());
+
         eventRepo.save(event);
         return new ResponseEntity<>(event, HttpStatus.OK);
     }
+    @GetMapping("/getallevents")
+    public ResponseEntity<List> getAllEvents(){
+        List<Event> events = eventRepo.getAllValidateEvents();
+        return new ResponseEntity<>(events, HttpStatus.OK);
+    }
+
 }
