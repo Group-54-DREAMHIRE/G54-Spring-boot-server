@@ -68,8 +68,7 @@ public class ResumeController {
 
     public Resume getResume(int id){
         if(resumeRepo.existsByCandidateId(id)){
-            Resume resume = resumeRepo.findByCandidateId(id);
-            return resume;
+            return resumeRepo.findByCandidateId(id);
         }else{
             Resume resume =  new Resume();
             resume.setCandidate(candidateRepo.findById(id));
@@ -77,4 +76,12 @@ public class ResumeController {
         }
     }
 
+    @GetMapping("/getResume/{id}")
+    public ResponseEntity<?> getCandidateResume(@PathVariable int id){
+        if(resumeRepo.existsByCandidateId(id)){
+            return new ResponseEntity<>(resumeRepo.findByCandidateId(id), HttpStatus.OK);
+        }else{
+           return new ResponseEntity<>(null, HttpStatus.OK);
+        }
+    }
 }

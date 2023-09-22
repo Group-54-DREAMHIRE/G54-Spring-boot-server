@@ -22,7 +22,6 @@ public class SystemUserService {
     private CandidateRepo candidateRepo;
     @Autowired
     private CompanyRepo companyRepo;
-
     @Autowired
     private PasswordEncoder passwordEncoder;
 

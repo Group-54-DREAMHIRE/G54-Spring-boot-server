@@ -93,7 +93,6 @@ public class JobPostController {
             postedJob.setDeadline((Date) job[4]);
             postedJob.setNumberOfVacancies((int) job[5]);
             postedJob.setNumberOfApplicants((BigInteger) job[6]);
-
             postedJobs.add(postedJob);
 
         }

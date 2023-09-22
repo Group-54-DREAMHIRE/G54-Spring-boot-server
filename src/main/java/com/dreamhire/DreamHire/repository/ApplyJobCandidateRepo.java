@@ -11,7 +11,7 @@ import java.util.List;
 public interface ApplyJobCandidateRepo extends JpaRepository<ApplyJobCandidate, Integer> {
 
     ApplyJobCandidate findById(int id);
-
+    ApplyJobCandidate findByCandidateId(int id);
     @Modifying
     @Query(value = "SELECT * FROM apply_job_candidate WHERE candidate_type = 'shortlist' AND job_id = :id", nativeQuery = true)
     List<ApplyJobCandidate> getShortListResumes(int id);

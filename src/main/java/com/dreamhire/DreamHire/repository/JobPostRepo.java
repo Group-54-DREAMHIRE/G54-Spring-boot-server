@@ -13,6 +13,8 @@ import java.util.List;
 public interface JobPostRepo extends JpaRepository<JobPost, Integer> {
 
     JobPost findById(int id);
+    boolean existsById(Integer integer);
+
 
     @Query(value = "SELECT * FROM jobpost WHERE validate=true  ", nativeQuery = true)
     List<JobPost> getAllValidateJobPosts();
@@ -21,7 +23,7 @@ public interface JobPostRepo extends JpaRepository<JobPost, Integer> {
     @Query(value = "SELECT * FROM jobpost WHERE company_id = id;", nativeQuery = true)
     List<JobPost> getJobPostsByCompanyId(int id);
 
-    @Query(value = "select JP.id, JP.job_title,JP.tags,JP.validate,JP.deadline,JP.number_of_vacancies, COUNT(AJC.id)   FROM apply_job_candidate AJC LEFT JOIN jobpost JP ON JP.id = AJC.job_id WHERE JP.company_id = :id group by  JP.id;",nativeQuery = true)
+    @Query(value = "select JP.id, JP.job_title,JP.tags,JP.validate,JP.deadline,JP.number_of_vacancies, COUNT(AJC.id)   FROM apply_job_candidate AJC LEFT JOIN jobpost JP ON JP.id = AJC.job_id WHERE JP.company_id = :id GROUP BY  JP.id;",nativeQuery = true)
     List<Object[]> getJobs(int id);
 
 }
