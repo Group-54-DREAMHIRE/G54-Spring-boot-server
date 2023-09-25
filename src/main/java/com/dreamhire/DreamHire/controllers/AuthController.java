@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/v1/auth/")
+@RequestMapping(path = "/api/v1/auth/")
 public class AuthController {
 
     @Autowired
@@ -42,7 +42,7 @@ public class AuthController {
     private JWTGenerator jwtGenerator;
 
 
-    @PostMapping("login")
+    @PostMapping(path = "login")
     public ResponseEntity<?> login(@RequestBody LoginDto loginDto) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -50,7 +50,7 @@ public class AuthController {
                         loginDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        String token = jwtGenerator.generateToken(authentication);
+        String token = jwtGenerator.generateToken(loginDto.getEmail());
         String userType = systemUserRepo.findByEmail(loginDto.getEmail()).get().getUserType().toString();
         if(userType == "candidate"){
             Candidate candidate = candidateRepo.findBySystemUserId(systemUserRepo.findByEmail(loginDto.getEmail()).get().getId());
@@ -69,7 +69,7 @@ public class AuthController {
 
     }
 
-    @PostMapping("register")
+    @PostMapping(path = "register")
     public ResponseEntity<String> register(@RequestBody RegisterDto registerDto) {
         String res = systemUserService.registerSystemUser(registerDto);
         if (res.equals("bad")) {

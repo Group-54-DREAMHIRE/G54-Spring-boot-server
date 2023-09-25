@@ -19,7 +19,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("api/v1/jobpost")
+@RequestMapping(path = "api/v1/jobpost")
 public class JobPostController {
 
     @Autowired
@@ -34,7 +34,7 @@ public class JobPostController {
     @Autowired
     private CustomDataRepo customDataRepo;
 
-    @PostMapping("/save/{id}")
+    @PostMapping(path = "/save/{id}")
     public ResponseEntity<?> addJobPost (@PathVariable int id, @RequestBody JobPostDTO post){
             JobPost jobPost = new JobPost();
             jobPost.setAuthor(systemUserRepo.findById(post.getSystemUserID()).get().getEmail());
@@ -60,26 +60,26 @@ public class JobPostController {
 
     }
 
-    @GetMapping("/getalljobs")
+    @GetMapping(path = "/getalljobs")
     public ResponseEntity<List> getAllJobPosts(){
         List<JobPost> jobs = jobPostRepo.getAllValidateJobPosts();
         return new ResponseEntity<>(jobs, HttpStatus.OK);
     }
 
-    @GetMapping("/getjobpost/{id}")
+    @GetMapping(path = "/getjobpost/{id}")
     public ResponseEntity<?> getJobPost(@PathVariable int id){
         JobPost jobPost = jobPostRepo.findById(id);
         return new ResponseEntity<>(jobPost, HttpStatus.OK);
     }
 
-    @GetMapping("/getAllJobsByCompanyId/{id}")
+    @GetMapping(path = "/getAllJobsByCompanyId/{id}")
     public ResponseEntity<?> getAllJobsByCompanyId(@PathVariable int id){
         List<JobPost> jobs = jobPostRepo.getJobPostsByCompanyId(id);
         System.out.println(jobs);
         return new ResponseEntity<>( jobs,HttpStatus.OK);
     }
 
-    @GetMapping("/getjobs/{id}")
+    @GetMapping(path = "/getjobs/{id}")
     public ResponseEntity<?> getAllJobsByCompany(@PathVariable int id){
         List<Object[]> jobs = jobPostRepo.getJobs(id);
         List<PostedJobsDTO> postedJobs = new ArrayList<PostedJobsDTO>();

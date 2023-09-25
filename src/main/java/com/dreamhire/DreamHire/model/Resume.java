@@ -53,13 +53,12 @@ public class Resume {
     @Column(length = 500)
     private String discord;
     private String linkedInLabel;
-
-
-
     private String twitterLabel;
     private String githubLabel;
     private String websiteLabel;
     private String discordLabel;
+
+    private boolean hasResume;
 
     @OneToOne
     @JoinColumn(name = "can_id")

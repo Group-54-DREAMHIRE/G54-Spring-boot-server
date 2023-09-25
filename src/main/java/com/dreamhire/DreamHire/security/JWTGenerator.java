@@ -10,31 +10,30 @@ import org.springframework.stereotype.Component;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class JWTGenerator {
-	//private static final KeyPair keyPair = Keys.keyPairFor(SignatureAlgorithm.RS256);
-	private static final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
-//	private static final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-	
-	public String generateToken(Authentication authentication) {
-		String username = authentication.getName();
-		Date currentDate = new Date();
-		Date expireDate = new Date(currentDate.getTime() + SecurityConstants.JWT_EXPIRATION);
-		
-		String token = Jwts.builder()
-				.setSubject(username)
-				.setIssuedAt( new Date())
-				.setExpiration(expireDate)
-				.signWith(key,SignatureAlgorithm.HS512)
-				.compact();
-		System.out.println("New token :");
-		System.out.println(token);
-		return token;
+
+	private static final String SECRET = "5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437";
+
+	public String generateToken(String email) {
+		Map<String, Object> claims = new HashMap<>();
+		return createToken(claims, email);
+	}
+
+	private String createToken(Map<String, Object> claims, String email) {
+		return Jwts.builder()
+				.setClaims(claims)
+				.setSubject(email)
+				.setIssuedAt(new Date(System.currentTimeMillis()))
+				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 30 * 12))
+				.signWith(SignatureAlgorithm.HS256, SECRET).compact();
 	}
 	public String getUsernameFromJWT(String token){
 		Claims claims = Jwts.parserBuilder()
-				.setSigningKey(key)
+				.setSigningKey(SECRET)
 				.build()
 				.parseClaimsJws(token)
 				.getBody();
@@ -44,7 +43,7 @@ public class JWTGenerator {
 	public boolean validateToken(String token) {
 		try {
 			Jwts.parserBuilder()
-			.setSigningKey(key)
+			.setSigningKey(SECRET)
 			.build()
 			.parseClaimsJws(token);
 			return true;

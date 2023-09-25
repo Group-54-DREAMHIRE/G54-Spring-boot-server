@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -29,6 +30,7 @@ public class ApplyJobCandidate {
 
     @Enumerated(value = EnumType.STRING)
     private CandidateType candidateType=CandidateType.pending;
+    private Date appliedDate;
     private String candidateName;
     private String candidatePhone;
     private String candidateEmail;
@@ -45,6 +47,7 @@ public class ApplyJobCandidate {
         this.candidateEmail = applyJob.getCandidateEmail();
         this.candidateCity = applyJob.getCandidateCity();
         this.jobTitle = applyJob.getJobTitle();
+        this.appliedDate = applyJob.getAppliedDate();
         this.tags = applyJob.getTags();
     }
 }

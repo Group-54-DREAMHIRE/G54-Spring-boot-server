@@ -8,6 +8,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CustomUserDetailsService  implements UserDetailsService {
 
@@ -20,13 +22,9 @@ public class CustomUserDetailsService  implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        SystemUser user = systemUserRepo.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Username not found"));
-//        return  new User(user.getUsername(), user.getPassword(),  user.getRole());
-        return org.springframework.security.core.userdetails.User.builder()
-                .username(user.getEmail())
-                .password(user.getPassword())
-                .authorities(user.getUserType().toString())  // Provide the necessary authorities/roles
-                .build();
+        Optional<SystemUser> user = systemUserRepo.findByEmail(email);
+        return user.map(CustomUserDetails::new).orElseThrow(()-> new UsernameNotFoundException("user not found with email: "+ email));
+
     }
 //
 //    private Collection<GrantedAuthority> mapRolesToAuthorities(List<Role> roles) {

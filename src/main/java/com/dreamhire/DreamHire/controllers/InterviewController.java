@@ -22,7 +22,7 @@ import java.util.Objects;
 
 @CrossOrigin
 @RestController
-@RequestMapping("api/v1/interview")
+@RequestMapping(path = "api/v1/interview")
 public class InterviewController {
     @Autowired
     private InterviewRepo interviewRepo;
@@ -33,7 +33,7 @@ public class InterviewController {
     @Autowired
     private ApplyJobCandidateRepo applyJobCandidateRepo;
 
-    @PostMapping("/save")
+    @PostMapping(path = "/save")
     public ResponseEntity<?> saveInterview(@RequestBody List<InterviewDTO> interviews){
         for(int i = 0; i <interviews.size(); i++){
             System.out.println(1);
@@ -45,7 +45,7 @@ public class InterviewController {
         return new ResponseEntity<>("Saved Successfully", HttpStatus.OK);
     }
 
-    @PostMapping("/getScheduledTechInterviews/{id}")
+    @PostMapping(path = "/getScheduledTechInterviews/{id}")
     public ResponseEntity<?> getScheduledTechInterviews(@PathVariable int id, @RequestBody GetInterviewDTO getInterview){
         if(Objects.equals(applyJobCandidateRepo.findByCandidateId(id).getCandidateType().toString(), "shortlist")){
             if(jobPostRepo.existsById(getInterview.getJobId())){
@@ -61,7 +61,7 @@ public class InterviewController {
 
     }
 
-    @PostMapping("/getScheduledHrInterviews/{id}")
+    @PostMapping(path = "/getScheduledHrInterviews/{id}")
     public ResponseEntity<?> getScheduledHrTechInterviews(@PathVariable int id, @RequestBody GetInterviewDTO getInterview){
         if(Objects.equals(applyJobCandidateRepo.findByCandidateId(id).getCandidateType().toString(), "shortlist")){
             if(jobPostRepo.existsById(getInterview.getJobId())){

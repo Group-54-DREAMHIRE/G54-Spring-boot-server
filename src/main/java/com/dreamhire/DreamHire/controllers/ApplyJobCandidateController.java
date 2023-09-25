@@ -15,7 +15,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("api/v1/applyjobcandidate")
+@RequestMapping(path = "api/v1/applyjobcandidate")
 public class ApplyJobCandidateController {
 
     @Autowired
@@ -25,7 +25,7 @@ public class ApplyJobCandidateController {
     @Autowired
     private ApplyJobCandidateRepo applyJobCandidateRepo;
 
-    @PostMapping("/save/{id}")
+    @PostMapping(path = "/save/{id}")
     public ResponseEntity<?> saveApplyJobCandidate(@PathVariable int id, @RequestBody ApplyJobDTO applyJob){
         if(applyJobCandidateRepo.existsByCandidateId(id)){
             return new ResponseEntity<>("already applied", HttpStatus.BAD_REQUEST);
@@ -37,7 +37,7 @@ public class ApplyJobCandidateController {
         return new ResponseEntity<>("Apply is successfully", HttpStatus.OK);
     }
 
-    @GetMapping("/getPendingCandidates/{id}")
+    @GetMapping(path = "/getPendingCandidates/{id}")
     public ResponseEntity<?> getPendingCandidates(@PathVariable int id){
         if(jobPostRepo.existsById(id)){
             List <ApplyJobCandidate> applyJobCandidate = applyJobCandidateRepo.getPendingResumes(id);
@@ -48,7 +48,7 @@ public class ApplyJobCandidateController {
 
     }
 
-    @GetMapping("/getShortListedCandidates/{id}")
+    @GetMapping(path = "/getShortListedCandidates/{id}")
     public ResponseEntity<?> getShortListCandidates(@PathVariable int id){
         if(jobPostRepo.existsById(id)){
             List <ApplyJobCandidate> applyJobCandidate = applyJobCandidateRepo.getShortListResumes(id);
@@ -59,7 +59,7 @@ public class ApplyJobCandidateController {
 
     }
 
-    @GetMapping("/getRejectedCandidates/{id}")
+    @GetMapping(path = "/getRejectedCandidates/{id}")
     public ResponseEntity<?> getRejectedCandidates(@PathVariable int id){
         if(jobPostRepo.existsById(id)){
             List <ApplyJobCandidate> applyJobCandidate = applyJobCandidateRepo.getRejectedResumes(id);
@@ -70,7 +70,7 @@ public class ApplyJobCandidateController {
 
     }
 
-    @GetMapping("/getCanceledCandidates/{id}")
+    @GetMapping(path = "/getCanceledCandidates/{id}")
     public ResponseEntity<?> getCanceledCandidates(@PathVariable int id){
         if(jobPostRepo.existsById(id)){
             List <ApplyJobCandidate> applyJobCandidate = applyJobCandidateRepo.getCanceledResumes(id);
@@ -81,7 +81,7 @@ public class ApplyJobCandidateController {
 
     }
 
-    @GetMapping("/getAppliedJobs/{id}")
+    @GetMapping(path = "/getAppliedJobs/{id}")
     public ResponseEntity<?> getAppliedJobs(@PathVariable int id){
         if(candidateRepo.existsById(id)){
            List <ApplyJobCandidate> applyJobCandidate = applyJobCandidateRepo.getApplyJobCandidateByCandidateId(id);

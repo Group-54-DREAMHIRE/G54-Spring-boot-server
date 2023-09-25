@@ -16,7 +16,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("api/v1/resume")
+@RequestMapping(path = "api/v1/resume")
 public class ResumeController {
 
     @Autowired
@@ -25,7 +25,7 @@ public class ResumeController {
     @Autowired
     private ResumeRepo resumeRepo;
 
-    @PostMapping("/save/{id}")
+    @PostMapping(path = "/save/{id}")
     public ResponseEntity<?> saveResume(@PathVariable int id, @RequestBody List<Object> data) throws JsonProcessingException {
             ObjectMapper objectMapper = new ObjectMapper();
             Resume resume = new Resume(getResume(id));
@@ -43,7 +43,7 @@ public class ResumeController {
         return new ResponseEntity<>(resume, HttpStatus.OK);
     }
 
-    @PostMapping("/saveprofile/{id}")
+    @PostMapping(path = "/saveprofile/{id}")
     public ResponseEntity<?> saveProfile(@PathVariable int id, @RequestBody ProfileDTO profileDTO){
         Resume resume = new Resume(getResume(id));
         resume.setName(profileDTO.getName());
@@ -72,11 +72,12 @@ public class ResumeController {
         }else{
             Resume resume =  new Resume();
             resume.setCandidate(candidateRepo.findById(id));
+            resume.setHasResume(true);
             return resume;
         }
     }
 
-    @GetMapping("/getResume/{id}")
+    @GetMapping(path = "/getResume/{id}")
     public ResponseEntity<?> getCandidateResume(@PathVariable int id){
         if(resumeRepo.existsByCandidateId(id)){
             return new ResponseEntity<>(resumeRepo.findByCandidateId(id), HttpStatus.OK);

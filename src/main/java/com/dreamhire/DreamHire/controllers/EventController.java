@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
 @RestController
-@RequestMapping("api/v1/event")
+@RequestMapping(path = "api/v1/event")
 public class EventController {
     @Autowired
     private EventRepo eventRepo;
     @Autowired
     private CompanyRepo companyRepo;
 
-    @PostMapping("/save/{id}")
+    @PostMapping(path = "/save/{id}")
     public ResponseEntity<?> saveEvent(@PathVariable int id, @RequestBody EventDTO eventDTO){
         Event event = new Event(eventDTO);
         event.setCompany(companyRepo.findById(eventDTO.getCompanyID()));

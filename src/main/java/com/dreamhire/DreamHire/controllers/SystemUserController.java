@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
 @RestController
-@RequestMapping("api/v1/systemUser/")
+@RequestMapping(path = "api/v1/systemUser/")
 public class SystemUserController {
 
     @Autowired
     private SystemUserService systemUserService;
 
-    @PutMapping("changePassword")
+    @PutMapping(path = "changePassword")
     public ResponseEntity<String> changePassword(@RequestBody ChangePasswordDTO changePasswordDTO){
         String res = systemUserService.changeUserPassword(changePasswordDTO);
         if(res.equals("bad")){

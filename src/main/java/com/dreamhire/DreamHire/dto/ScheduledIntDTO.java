@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Data
 public class ScheduledIntDTO {
-    private int id;
+    private int intId;
     private String companyName;
     private Date startTime;
     private int duration;

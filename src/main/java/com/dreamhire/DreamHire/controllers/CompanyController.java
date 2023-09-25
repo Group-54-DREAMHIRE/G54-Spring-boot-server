@@ -16,14 +16,14 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("api/v1/company")
+@RequestMapping(path = "api/v1/company")
 public class CompanyController {
     @Autowired
     SystemUserRepo systemUserRepo;
     @Autowired
     CompanyRepo companyRepo;
 
-   @PostMapping("/save/{id}")
+   @PostMapping(path = "/save/{id}")
     public ResponseEntity<?> saveCompany(@PathVariable int id, @RequestBody CompanyDataDTO companyData){
         if(companyRepo.existsById(id)){
             Company company = companyRepo.findById(id);
@@ -47,7 +47,7 @@ public class CompanyController {
        return new ResponseEntity<>("Data is invalid", HttpStatus.BAD_REQUEST);
    }
 
-    @GetMapping("/get/{id}")
+    @GetMapping(path = "/get/{id}")
     public ResponseEntity<?> getCompany(@PathVariable int id){
         if(companyRepo.existsById(id)){
             Company company = companyRepo.findById(id);
@@ -56,13 +56,13 @@ public class CompanyController {
             return new ResponseEntity<>("User details is invalid",HttpStatus.BAD_REQUEST);
         }
     }
-    @GetMapping("/getAllCompanies")
+    @GetMapping(path = "/getAllCompanies")
     public ResponseEntity<List> getAllCompanies(){
        List <Company> companies = companyRepo.getAllApprovedVisibleCompanies();
        return new ResponseEntity<List>(companies, HttpStatus.OK);
     }
 
-    @PostMapping("/saveBR/{id}")
+    @PostMapping(path = "/saveBR/{id}")
     public ResponseEntity<?> saveBR(@PathVariable int id, @RequestBody RegistrationDTO registration){
        if(companyRepo.existsById(id)){
            Company company = companyRepo.findById(id);
@@ -74,7 +74,7 @@ public class CompanyController {
        }
     }
 
-    @GetMapping("/getPendingApprovals")
+    @GetMapping(path = "/getPendingApprovals")
     public ResponseEntity<?> getPendingApprovalList(){
        List <Company> company = companyRepo.getPendingApprovalList();
        return new ResponseEntity<>(company, HttpStatus.OK);
