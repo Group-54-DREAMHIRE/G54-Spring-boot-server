@@ -31,6 +31,8 @@ public class ApplyJobCandidate {
     @Enumerated(value = EnumType.STRING)
     private CandidateType candidateType=CandidateType.pending;
     private Date appliedDate;
+    @Column(columnDefinition = "TEXT")
+    private String reason;
     private String candidateName;
     private String candidatePhone;
     private String candidateEmail;

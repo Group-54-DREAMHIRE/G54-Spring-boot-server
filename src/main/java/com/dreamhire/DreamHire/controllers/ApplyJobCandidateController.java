@@ -1,8 +1,10 @@
 package com.dreamhire.DreamHire.controllers;
 
 import com.dreamhire.DreamHire.dto.ApplyJobDTO;
+import com.dreamhire.DreamHire.dto.CanselJobDTO;
 import com.dreamhire.DreamHire.dto.SendCandidateResumeDTO;
 import com.dreamhire.DreamHire.model.ApplyJobCandidate;
+import com.dreamhire.DreamHire.model.CandidateType;
 import com.dreamhire.DreamHire.repository.ApplyJobCandidateRepo;
 import com.dreamhire.DreamHire.repository.CandidateRepo;
 import com.dreamhire.DreamHire.repository.JobPostRepo;
@@ -90,6 +92,22 @@ public class ApplyJobCandidateController {
         else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @PostMapping(path = "/cansel/{id}")
+    public ResponseEntity<?> canselJob(@PathVariable int id, @RequestBody CanselJobDTO canselJobDTO){
+        if(candidateRepo.existsById(id)){
+            int jobId = canselJobDTO.getJobId();
+            ApplyJobCandidate applyJobCandidate = applyJobCandidateRepo.findByCandidateAndJobPostId(id,jobId);
+            applyJobCandidate.setCandidateType(CandidateType.valueOf("cancel"));
+            applyJobCandidate.setReason(canselJobDTO.getReason());
+            applyJobCandidate.setAppliedDate(canselJobDTO.getCanselDate());
+            applyJobCandidateRepo.save(applyJobCandidate);
+            return new ResponseEntity<>("Success",HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
     }
 
 }
