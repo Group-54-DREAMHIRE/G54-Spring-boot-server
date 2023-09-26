@@ -12,18 +12,18 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "admin")
-public class Admin {
+@Table(name = "interview_candidate")
+public class InterviewCandidate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String name;
-    private String email;
-    private String phone;
-    private String profilePicture;
-
+    private String report;
+    private String status="accept";
+    @ManyToOne
+    @JoinColumn(name = "can_id")
+    private Candidate candidate;
 
     @ManyToOne
-    @JoinColumn(name = "system_user_id")
-    private SystemUser systemUser;
+    @JoinColumn(name = "int_id")
+    private Interview interview;
 }

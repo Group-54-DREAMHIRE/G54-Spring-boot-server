@@ -18,7 +18,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("api/v1/candidate")
+@RequestMapping(path = "api/v1/candidate")
 public class CandidateController {
 
     @Autowired
@@ -26,7 +26,7 @@ public class CandidateController {
     @Autowired
     private CandidateRepo candidateRepo;
 
-   @PostMapping("/save/{id}")
+   @PostMapping(path = "/save/{id}")
     public ResponseEntity<?> saveCandidate(@PathVariable int id, @RequestBody CandidateDataDTO data){
         if(candidateRepo.existsById(id)){
             Candidate candidate = candidateRepo.findById(id);
@@ -55,7 +55,7 @@ public class CandidateController {
 
    }
 
-   @GetMapping("/get/{id}")
+   @GetMapping(path = "/get/{id}")
     public ResponseEntity<?> getCandidate(@PathVariable int id){
        if(candidateRepo.existsById(id)){
            Candidate candidate = candidateRepo.findById(id);
@@ -65,7 +65,7 @@ public class CandidateController {
        }
    }
 
-    @GetMapping("/getAllCandidates")
+    @GetMapping(path = "/getAllCandidates")
     public ResponseEntity<List> getAllCandidates(){
         List <Candidate> candidates = candidateRepo.getAllVisibleCandidates();
         return new ResponseEntity<List>(candidates, HttpStatus.OK);

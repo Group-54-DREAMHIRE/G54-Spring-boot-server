@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
 @RestController
-@RequestMapping("api/v1/admin")
+@RequestMapping(path = "api/v1/admin")
 public class AdminController {
 
     @Autowired
@@ -22,26 +22,38 @@ public class AdminController {
     @Autowired
     CompanyRepo companyRepo;
 
-    @PostMapping("/save/{id}")
-    public ResponseEntity<String> saveAdmin(@PathVariable int id, @RequestBody Admin admin) {
-        if (adminRepo.existsBySystemUserId(id)) {
-            Admin admin1 = adminRepo.findBySystemUserId(id);
+    @PostMapping(path = "/save/{id}")
+    public ResponseEntity<?> saveAdmin(@PathVariable int id, @RequestBody Admin admin) {
+        if (adminRepo.existsById(id)) {
+            Admin admin1 = adminRepo.findById(id);
             admin1.setEmail(admin.getEmail());
             admin1.setPhone(admin.getPhone());
+            admin1.setName(admin.getName());
+            admin1.setProfilePicture(admin.getProfilePicture());
             adminRepo.save(admin1);
-            return new ResponseEntity<>("Updated successfully", HttpStatus.OK);
+            return new ResponseEntity<>(admin1, HttpStatus.OK);
         } else {
             return new ResponseEntity<>("Data is invalid", HttpStatus.BAD_REQUEST);
         }
 
     }
 
-    @PostMapping("approve/company/{id}")
-    public ResponseEntity<String> approveCompany(@PathVariable int id){
+    @PostMapping(path = "/approve/company/{id}")
+    public ResponseEntity<String> approveCompany(@PathVariable int id, @RequestBody String approve){
         if(companyRepo.existsById(id)){
             Company company = companyRepo.findById(id);
             company.setApproval(true);
-            return new ResponseEntity<>("Approved", HttpStatus.OK);
+            companyRepo.save(company);
+            return new ResponseEntity<>("Approved Successfully", HttpStatus.OK);
+        }else return new ResponseEntity<>("Invalid Data", HttpStatus.BAD_REQUEST);
+    }
+    @PostMapping(path = "/reject/company/{id}")
+    public ResponseEntity<String> rejectCompany(@PathVariable int id, @RequestBody String reject){
+        if(companyRepo.existsById(id)){
+            Company company = companyRepo.findById(id);
+            company.setReject(true);
+            companyRepo.save(company);
+            return new ResponseEntity<>("Rejected Successfully", HttpStatus.OK);
         }else return new ResponseEntity<>("Invalid Data", HttpStatus.BAD_REQUEST);
     }
 }

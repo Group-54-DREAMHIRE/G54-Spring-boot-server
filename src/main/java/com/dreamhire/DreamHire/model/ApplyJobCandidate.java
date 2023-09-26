@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,13 +28,17 @@ public class ApplyJobCandidate {
     @JoinColumn(name = "can_id")
     private Candidate candidate;
 
-    private String status = "pending";
+    @Enumerated(value = EnumType.STRING)
+    private CandidateType candidateType=CandidateType.pending;
+    private Date appliedDate;
     private String candidateName;
     private String candidatePhone;
     private String candidateEmail;
     private String candidateCity;
-    private String currency;
-    private String expectSalary;
+    private String currency="$USD";
+    private String expectSalary="500";
+    private String jobTitle;
+    @Column(length = 500)
     private String tags;
 
     public ApplyJobCandidate(ApplyJobDTO applyJob) {
@@ -41,8 +46,8 @@ public class ApplyJobCandidate {
         this.candidatePhone = applyJob.getCandidatePhone();
         this.candidateEmail = applyJob.getCandidateEmail();
         this.candidateCity = applyJob.getCandidateCity();
-        this.currency = applyJob.getCurrency();
-        this.expectSalary = applyJob.getExpectSalary();
+        this.jobTitle = applyJob.getJobTitle();
+        this.appliedDate = applyJob.getAppliedDate();
         this.tags = applyJob.getTags();
     }
 }
