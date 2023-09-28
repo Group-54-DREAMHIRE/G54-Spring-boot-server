@@ -44,7 +44,6 @@ public class Event {
 
     public Event(EventDTO eventDTO) {
         this.companyName = eventDTO.getCompanyName();
-        this.author = eventDTO.getAuthor();
         this.title = eventDTO.getTitle();
         this.description = eventDTO.getDescription();
         this.cover = eventDTO.getCover();
@@ -56,4 +55,5 @@ public class Event {
         this.email = eventDTO.getEmail();
         this.phone = eventDTO.getPhone();
     }
+    public void setAuthor(String email){ this.author = email; }
 }

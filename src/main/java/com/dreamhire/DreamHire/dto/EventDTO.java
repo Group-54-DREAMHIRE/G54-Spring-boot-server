@@ -20,6 +20,8 @@ public class EventDTO {
     private String companies;
     private Date date;
     private Date postedDate;
+    private int systemUserID;
+    private String contactNumber;
     private LocalTime startTime;
     private LocalTime endTime;
     private String email;

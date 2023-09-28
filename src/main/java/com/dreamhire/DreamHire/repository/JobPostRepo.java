@@ -12,6 +12,7 @@ import java.util.List;
 
 public interface JobPostRepo extends JpaRepository<JobPost, Integer> {
 
+    boolean existsById(int id);
     JobPost findById(int id);
 
     @Query(value = "SELECT * FROM jobpost WHERE validate=true  ", nativeQuery = true)

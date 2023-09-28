@@ -27,9 +27,6 @@ public class ApplyJobCandidateController {
 
     @PostMapping("/save/{id}")
     public ResponseEntity<?> saveApplyJobCandidate(@PathVariable int id, @RequestBody ApplyJobDTO applyJob){
-        if(applyJobCandidateRepo.existsByCandidateId(id)){
-            return new ResponseEntity<>("already applied", HttpStatus.BAD_REQUEST);
-        }
         ApplyJobCandidate applyJobCandidate = new ApplyJobCandidate(applyJob);
         applyJobCandidate.setJobPost(jobPostRepo.findById(applyJob.getJobID()));
         applyJobCandidate.setCandidate(candidateRepo.findById(id));

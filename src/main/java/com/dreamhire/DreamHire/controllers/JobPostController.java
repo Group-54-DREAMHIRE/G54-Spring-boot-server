@@ -36,7 +36,8 @@ public class JobPostController {
 
     @PostMapping("/save/{id}")
     public ResponseEntity<?> addJobPost (@PathVariable int id, @RequestBody JobPostDTO post){
-            JobPost jobPost = new JobPost();
+        if(jobPostRepo.existsById(id)) {
+            JobPost jobPost = jobPostRepo.findById(id);
             jobPost.setAuthor(systemUserRepo.findById(post.getSystemUserID()).get().getEmail());
             jobPost.setCompanyName(post.getCompanyName());
             jobPost.setPostedDate(post.getPostedDate());
@@ -54,10 +55,10 @@ public class JobPostController {
             jobPost.setHowToApply(post.getHowToApply());
             jobPost.setJobRequirements(post.getJobRequirements());
             jobPost.setTags(post.getTags());
-            jobPost.setCompany(companyRepo.findById(id));
             jobPostRepo.save(jobPost);
             return new ResponseEntity<>(jobPost, HttpStatus.OK);
-
+        }
+        return  new ResponseEntity<>("Data is invalid", HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("/getalljobs")

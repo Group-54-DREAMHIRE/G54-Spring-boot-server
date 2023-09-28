@@ -4,7 +4,9 @@ import com.dreamhire.DreamHire.dto.EventDTO;
 import com.dreamhire.DreamHire.model.Company;
 import com.dreamhire.DreamHire.model.Event;
 import com.dreamhire.DreamHire.repository.CompanyRepo;
+import com.dreamhire.DreamHire.repository.CustomDataRepo;
 import com.dreamhire.DreamHire.repository.EventRepo;
+import com.dreamhire.DreamHire.repository.SystemUserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,24 +14,34 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin()
 @RestController
-@RequestMapping("api/v1/event")
+@RequestMapping("/api/v1/event")
 public class EventController {
+
+    @Autowired
+    private SystemUserRepo systemUserRepo;
+
+    @Autowired
+    private CustomDataRepo customDataRepo;
+
     @Autowired
     private EventRepo eventRepo;
+
     @Autowired
     private CompanyRepo companyRepo;
+
 
     @PostMapping("/save/{id}")
     public ResponseEntity<?> saveEvent(@PathVariable int id, @RequestBody EventDTO eventDTO){
         Event event = new Event();
-        event.setCompany(companyRepo.findById(eventDTO.getCompanyID()));
+        event.setAuthor(systemUserRepo.findById(eventDTO.getSystemUserID()).get().getEmail());
         event.setCompanyName(eventDTO.getCompanyName());
         event.setTitle(eventDTO.getTitle());
         event.setStartTime(eventDTO.getStartTime());
         event.setEndTime(eventDTO.getEndTime());
-
+        event.setDate(eventDTO.getDate());
+        event.setCompany(companyRepo.findById(id));
         eventRepo.save(event);
         return new ResponseEntity<>(event, HttpStatus.OK);
     }
