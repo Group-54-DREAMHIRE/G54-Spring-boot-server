@@ -1,7 +1,11 @@
 package com.dreamhire.DreamHire.controllers;
 
+import com.dreamhire.DreamHire.dto.GetInterviewDTO;
 import com.dreamhire.DreamHire.dto.InterviewDTO;
+import com.dreamhire.DreamHire.model.ApplyJobCandidate;
 import com.dreamhire.DreamHire.model.Interview;
+import com.dreamhire.DreamHire.repository.ApplyJobCandidateRepo;
+import com.dreamhire.DreamHire.repository.CandidateRepo;
 import com.dreamhire.DreamHire.repository.InterviewRepo;
 import com.dreamhire.DreamHire.repository.JobPostRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +18,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 @CrossOrigin
 @RestController
-@RequestMapping("api/v1/interview")
+@RequestMapping(path = "api/v1/interview")
 public class InterviewController {
     @Autowired
     private InterviewRepo interviewRepo;
@@ -25,7 +30,10 @@ public class InterviewController {
     @Autowired
     private JobPostRepo jobPostRepo;
 
-    @PostMapping("/save")
+    @Autowired
+    private ApplyJobCandidateRepo applyJobCandidateRepo;
+
+    @PostMapping(path = "/save")
     public ResponseEntity<?> saveInterview(@RequestBody List<InterviewDTO> interviews){
         for(int i = 0; i <interviews.size(); i++){
             System.out.println(1);
@@ -36,4 +44,37 @@ public class InterviewController {
         }
         return new ResponseEntity<>("Saved Successfully", HttpStatus.OK);
     }
+
+    @PostMapping(path = "/getScheduledTechInterviews/{id}")
+    public ResponseEntity<?> getScheduledTechInterviews(@PathVariable int id, @RequestBody GetInterviewDTO getInterview){
+        if(Objects.equals(applyJobCandidateRepo.findByCandidateId(id).getCandidateType().toString(), "shortlist")){
+            if(jobPostRepo.existsById(getInterview.getJobId())){
+                List<Interview >interview = interviewRepo.getTechInterviewByJobPostId(getInterview.getJobId());
+                return new ResponseEntity<>(interview,HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>("There is no job post by this id!",HttpStatus.BAD_REQUEST);
+            }
+        }else {
+            return new ResponseEntity<>("No Data",HttpStatus.OK);
+        }
+
+
+    }
+
+    @PostMapping(path = "/getScheduledHrInterviews/{id}")
+    public ResponseEntity<?> getScheduledHrTechInterviews(@PathVariable int id, @RequestBody GetInterviewDTO getInterview){
+        if(Objects.equals(applyJobCandidateRepo.findByCandidateId(id).getCandidateType().toString(), "shortlist")){
+            if(jobPostRepo.existsById(getInterview.getJobId())){
+                List<Interview >interview = interviewRepo.getTechInterviewByJobPostId(getInterview.getJobId());
+                return new ResponseEntity<>(interview,HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>("There is no job post by this id!",HttpStatus.BAD_REQUEST);
+            }
+        }else {
+            return new ResponseEntity<>("No Data",HttpStatus.OK);
+        }
+
+
+    }
+
 }

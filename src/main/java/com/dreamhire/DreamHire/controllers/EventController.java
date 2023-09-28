@@ -16,7 +16,9 @@ import java.util.List;
 
 @CrossOrigin()
 @RestController
+
 @RequestMapping("/api/v1/event")
+
 public class EventController {
 
     @Autowired
@@ -32,7 +34,10 @@ public class EventController {
     private CompanyRepo companyRepo;
 
 
+
     @PostMapping("/save/{id}")
+
+
     public ResponseEntity<?> saveEvent(@PathVariable int id, @RequestBody EventDTO eventDTO){
         Event event = new Event();
         event.setAuthor(systemUserRepo.findById(eventDTO.getSystemUserID()).get().getEmail());

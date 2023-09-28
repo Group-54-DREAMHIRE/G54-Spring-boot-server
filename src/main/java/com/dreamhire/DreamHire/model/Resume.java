@@ -58,6 +58,8 @@ public class Resume {
     private String websiteLabel;
     private String discordLabel;
 
+    private boolean hasResume;
+
     @OneToOne
     @JoinColumn(name = "can_id")
     private Candidate candidate;
@@ -74,6 +76,22 @@ public class Resume {
         this.otherQualification = resume.otherQualification;
         this.reference = resume.reference;
         this.candidate = resume.candidate;
+        this.email = resume.email;
+        this.name = resume.name;
+        this.profilePicture = resume.profilePicture;
+        this.jobTitle = resume.jobTitle;
+        this.phone = resume.phone;
+        this.address = resume.address;
+        this.twitter = resume.twitter;
+        this.linkedIn = resume.linkedIn;
+        this.github = resume.github;
+        this.website = resume.website;
+        this.discord = resume.discord;
+        this.linkedInLabel = resume.linkedInLabel;
+        this.twitterLabel = resume.twitterLabel;
+        this.githubLabel = resume.githubLabel;
+        this.websiteLabel = resume.websiteLabel;
+        this.discordLabel = resume.discordLabel;
     }
 
 

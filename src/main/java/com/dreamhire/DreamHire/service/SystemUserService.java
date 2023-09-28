@@ -13,7 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Transactional
+
 @Service
 public class SystemUserService {
     @Autowired
@@ -22,7 +22,6 @@ public class SystemUserService {
     private CandidateRepo candidateRepo;
     @Autowired
     private CompanyRepo companyRepo;
-
     @Autowired
     private PasswordEncoder passwordEncoder;
 

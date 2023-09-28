@@ -16,7 +16,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("api/v1/savedJobs")
+@RequestMapping(path = "api/v1/savedJobs")
 public class SavedJobController {
 
     @Autowired
@@ -26,7 +26,7 @@ public class SavedJobController {
     @Autowired
     private CandidateRepo candidateRepo;
 
-    @PostMapping("/save/{id}")
+    @PostMapping(path = "/save/{id}")
     public ResponseEntity<?> saveJob(@PathVariable int id, @RequestBody SavedJobDTO savedJob) {
         SavedJobs savedJobs = new SavedJobs();
         savedJobs.setJobPost(jobPostRepo.findById(savedJob.getJobId()));
@@ -35,13 +35,13 @@ public class SavedJobController {
         return new ResponseEntity<>("Successfully saved", HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping(path = "/delete/{id}")
     public ResponseEntity<?> deleteJob(@PathVariable int id){
         savedJobsRepo.deleteById(id);
         return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
     }
 
-    @GetMapping("/getAll/{id}")
+    @GetMapping(path = "/getAll/{id}")
     public ResponseEntity<?> getSavedJobs(@PathVariable int id){
         List<SavedJobs> savedJobs = savedJobsRepo.getSavedJobsByCandidateId(id);
         return new ResponseEntity<>(savedJobs, HttpStatus.OK);

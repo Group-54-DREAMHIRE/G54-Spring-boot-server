@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
 @RestController
-@RequestMapping("api/v1/admin")
+@RequestMapping(path = "api/v1/admin")
 public class AdminController {
 
     @Autowired
@@ -22,7 +22,7 @@ public class AdminController {
     @Autowired
     CompanyRepo companyRepo;
 
-    @PostMapping("/save/{id}")
+    @PostMapping(path = "/save/{id}")
     public ResponseEntity<?> saveAdmin(@PathVariable int id, @RequestBody Admin admin) {
         if (adminRepo.existsById(id)) {
             Admin admin1 = adminRepo.findById(id);
@@ -38,7 +38,7 @@ public class AdminController {
 
     }
 
-    @PostMapping("/approve/company/{id}")
+    @PostMapping(path = "/approve/company/{id}")
     public ResponseEntity<String> approveCompany(@PathVariable int id, @RequestBody String approve){
         if(companyRepo.existsById(id)){
             Company company = companyRepo.findById(id);
@@ -47,7 +47,7 @@ public class AdminController {
             return new ResponseEntity<>("Approved Successfully", HttpStatus.OK);
         }else return new ResponseEntity<>("Invalid Data", HttpStatus.BAD_REQUEST);
     }
-    @PostMapping("/reject/company/{id}")
+    @PostMapping(path = "/reject/company/{id}")
     public ResponseEntity<String> rejectCompany(@PathVariable int id, @RequestBody String reject){
         if(companyRepo.existsById(id)){
             Company company = companyRepo.findById(id);
