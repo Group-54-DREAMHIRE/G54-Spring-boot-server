@@ -7,6 +7,7 @@ import com.dreamhire.DreamHire.repository.CompanyRepo;
 import com.dreamhire.DreamHire.repository.CustomDataRepo;
 import com.dreamhire.DreamHire.repository.JobPostRepo;
 import com.dreamhire.DreamHire.repository.SystemUserRepo;
+import com.dreamhire.DreamHire.service.JobPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,8 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "api/v1/jobpost")
 public class JobPostController {
-
+    @Autowired
+    private JobPostService jobPostService;
     @Autowired
     private SystemUserRepo systemUserRepo;
 
@@ -61,6 +63,11 @@ public class JobPostController {
         return  new ResponseEntity<>("Data is invalid", HttpStatus.BAD_REQUEST);
     }
 
+//    @PutMapping("/updateJobPost/{id}")
+//    public JobPostDTO updateJobPost(@RequestBody JobPostDTO jobPostDTO) {
+//        return jobPostService.updateJobPost(jobPostDTO);
+//    }
+
     @GetMapping(path = "/getalljobs")
     public ResponseEntity<List> getAllJobPosts(){
         List<JobPost> jobs = jobPostRepo.getAllValidateJobPosts();
@@ -99,4 +106,5 @@ public class JobPostController {
         }
         return new ResponseEntity<>( postedJobs,HttpStatus.OK);
     }
+
 }

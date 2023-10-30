@@ -3,6 +3,7 @@ package com.dreamhire.DreamHire.controllers;
 import com.dreamhire.DreamHire.dto.EventDTO;
 import com.dreamhire.DreamHire.model.Company;
 import com.dreamhire.DreamHire.model.Event;
+import com.dreamhire.DreamHire.model.JobPost;
 import com.dreamhire.DreamHire.repository.CompanyRepo;
 import com.dreamhire.DreamHire.repository.CustomDataRepo;
 import com.dreamhire.DreamHire.repository.EventRepo;
@@ -54,6 +55,11 @@ public class EventController {
     public ResponseEntity<List> getAllEvents(){
         List<Event> events = eventRepo.getAllValidateEvents();
         return new ResponseEntity<>(events, HttpStatus.OK);
+    }
+    @GetMapping(path = "/getEvent/{id}")
+    public ResponseEntity<?> getEvent(@PathVariable int id){
+        Event event = eventRepo.findById(id);
+        return new ResponseEntity<>(event, HttpStatus.OK);
     }
 
 }
