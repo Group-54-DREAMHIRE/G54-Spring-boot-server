@@ -108,13 +108,12 @@ public class JobPostController {
         return new ResponseEntity<>( postedJobs,HttpStatus.OK);
     }
 
-<<<<<<< HEAD
+
     @PostMapping("/getSearchJob")
     public ResponseEntity<?> getSearchJobs(@RequestBody SearchJobsDTO searchJobsDTO){
         List<JobPost> jobs = jobPostRepo.getSearchJobs(searchJobsDTO.getJobTitle(), searchJobsDTO.getJobType(), searchJobsDTO.getSalary(),searchJobsDTO.getExperience());
         return new ResponseEntity<>(jobs, HttpStatus.OK);
 
     }
-=======
->>>>>>> nishan
+
 }

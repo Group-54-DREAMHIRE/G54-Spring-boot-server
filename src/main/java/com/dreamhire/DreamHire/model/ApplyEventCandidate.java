@@ -22,7 +22,7 @@ public class ApplyEventCandidate {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "job_id")
+    @JoinColumn(name = "eve_id")
     private Event event;
 
     @ManyToOne

@@ -41,4 +41,10 @@ public class ApplyEventCandidateController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
+    @GetMapping(path = "/getAppliedCandidates/{id}")
+    public ResponseEntity<?> getAppliedCandidates(@PathVariable int id){
+            List<ApplyEventCandidate> applyEventCandidate = applyEventCandidateRepo.getApplyEventCandidateByCandidateId(id);
+            return new ResponseEntity<>(applyEventCandidate,HttpStatus.OK);
+    }
 }

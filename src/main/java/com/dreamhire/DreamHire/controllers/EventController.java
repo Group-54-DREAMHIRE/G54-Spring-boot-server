@@ -66,5 +66,11 @@ public class EventController {
         return new ResponseEntity<>(event, HttpStatus.OK);
     }
 
+    @GetMapping(path = "/getScheduledEvents/{id}")
+    public ResponseEntity<?> getScheduledEvents(@PathVariable int id){
+        List<Event> events = eventRepo.getAllEventsByComId(id);
+        return new ResponseEntity<>(events, HttpStatus.OK);
+    }
+
 
 }
