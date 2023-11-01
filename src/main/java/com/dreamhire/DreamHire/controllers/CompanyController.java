@@ -4,6 +4,7 @@ import com.dreamhire.DreamHire.dto.CompanyDataDTO;
 import com.dreamhire.DreamHire.dto.RegistrationDTO;
 import com.dreamhire.DreamHire.model.Candidate;
 import com.dreamhire.DreamHire.model.Company;
+import com.dreamhire.DreamHire.model.JobPost;
 import com.dreamhire.DreamHire.repository.CompanyRepo;
 import com.dreamhire.DreamHire.repository.SystemUserRepo;
 import org.springframework.beans.factory.annotation.Autowired;

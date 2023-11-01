@@ -32,8 +32,8 @@ public class Event {
     private String companies;
     private Date date;
     private Date postedDate;
-    private LocalTime startTime;
-    private LocalTime endTime;
+    private Date startTime;
+    private Date endTime;
     private String email;
     private String phone;
     private boolean validate= true;
@@ -44,7 +44,6 @@ public class Event {
 
     public Event(EventDTO eventDTO) {
         this.companyName = eventDTO.getCompanyName();
-        this.author = eventDTO.getAuthor();
         this.title = eventDTO.getTitle();
         this.description = eventDTO.getDescription();
         this.cover = eventDTO.getCover();
@@ -56,4 +55,5 @@ public class Event {
         this.email = eventDTO.getEmail();
         this.phone = eventDTO.getPhone();
     }
+    public void setAuthor(String email){ this.author = email; }
 }
