@@ -29,7 +29,6 @@ public interface ApplyJobCandidateRepo extends JpaRepository<ApplyJobCandidate, 
     List<ApplyJobCandidate> getRejectedResumes(int id);
 
 
-
     @Modifying
     @Query(value = "SELECT * FROM apply_job_candidate WHERE can_id = :id AND candidate_type != 'cancel' ", nativeQuery = true)
     List<ApplyJobCandidate> getApplyJobCandidateByCandidateId(int id);

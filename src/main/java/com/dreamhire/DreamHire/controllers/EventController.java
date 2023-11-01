@@ -44,6 +44,7 @@ public class EventController {
         event.setAuthor(systemUserRepo.findById(eventDTO.getSystemUserID()).get().getEmail());
         event.setCompanyName(eventDTO.getCompanyName());
         event.setTitle(eventDTO.getTitle());
+        event.setCover(eventDTO.getCover());
         event.setStartTime(eventDTO.getStartTime());
         event.setEndTime(eventDTO.getEndTime());
         event.setDate(eventDTO.getDate());

@@ -32,8 +32,8 @@ public class Event {
     private String companies;
     private Date date;
     private Date postedDate;
-    private LocalTime startTime;
-    private LocalTime endTime;
+    private Date startTime;
+    private Date endTime;
     private String email;
     private String phone;
     private boolean validate= true;

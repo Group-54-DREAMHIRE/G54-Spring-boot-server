@@ -22,8 +22,8 @@ public class EventDTO {
     private Date postedDate;
     private int systemUserID;
     private String contactNumber;
-    private LocalTime startTime;
-    private LocalTime endTime;
+    private Date startTime;
+    private Date endTime;
     private String email;
     private String phone;
 }
