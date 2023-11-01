@@ -16,4 +16,5 @@ public interface CandidateRepo extends JpaRepository <Candidate,Integer>{
 
     @Query(value = "SELECT * FROM candidates WHERE visible= true", nativeQuery = true)
     List<Candidate> getAllVisibleCandidates();
+
 }

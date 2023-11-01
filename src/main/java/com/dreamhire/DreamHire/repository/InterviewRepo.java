@@ -8,11 +8,13 @@ import java.util.List;
 
 public interface InterviewRepo extends JpaRepository<Interview, Integer> {
 
+    boolean existsById(int id);
+
     Interview findById(int id);
-    @Query(value = "SELECT * FROM interviews WHERE job_id=:jobId AND type='technical' AND free = true;", nativeQuery = true)
+    @Query(value = "SELECT * FROM interviews WHERE job_id=:jobId AND type='technical' AND free = true", nativeQuery = true)
     List<Interview> getTechInterviewByJobPostId(int jobId);
 
-    @Query(value = "SELECT * FROM interviews WHERE job_id=:jobId AND type='hr' AND free = true;", nativeQuery = true)
+    @Query(value = "SELECT * FROM interviews WHERE job_id=:jobId AND type='hr' AND free = true", nativeQuery = true)
     List<Interview> getHrInterviewByJobPostId(int jobId);
 
 }

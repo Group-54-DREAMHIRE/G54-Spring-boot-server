@@ -25,6 +25,7 @@ public class Interview {
     private int duration;
     private String withInt;
     private boolean free=true;
+    private String meetingLink;
 
     @ManyToOne
     @JoinColumn(name = "job_id")
@@ -35,5 +36,6 @@ public class Interview {
         this.duration = interviewDTO.getDuration();
         this.withInt = interviewDTO.getWithInt();
         this.startTime = interviewDTO.getStartTime();
+        this.meetingLink = interviewDTO.getMeetingLink();
     }
 }

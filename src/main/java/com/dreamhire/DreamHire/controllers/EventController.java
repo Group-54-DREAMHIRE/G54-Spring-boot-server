@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin
 @RestController
 @RequestMapping(path = "api/v1/event")
@@ -25,5 +27,11 @@ public class EventController {
         event.setCompany(companyRepo.findById(eventDTO.getCompanyID()));
         eventRepo.save(event);
         return new ResponseEntity<>(event, HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/getAllEvents")
+    public ResponseEntity<?> getAllEvents(){
+        List<Event> events = eventRepo.getAllValidateEvents();
+        return new ResponseEntity<>(events, HttpStatus.OK);
     }
 }

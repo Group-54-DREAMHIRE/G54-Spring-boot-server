@@ -2,6 +2,7 @@ package com.dreamhire.DreamHire.controllers;
 
 import com.dreamhire.DreamHire.dto.JobPostDTO;
 import com.dreamhire.DreamHire.dto.PostedJobsDTO;
+import com.dreamhire.DreamHire.dto.SearchJobsDTO;
 import com.dreamhire.DreamHire.model.JobPost;
 import com.dreamhire.DreamHire.repository.CompanyRepo;
 import com.dreamhire.DreamHire.repository.CustomDataRepo;
@@ -97,5 +98,12 @@ public class JobPostController {
 
         }
         return new ResponseEntity<>( postedJobs,HttpStatus.OK);
+    }
+
+    @PostMapping("/getSearchJob")
+    public ResponseEntity<?> getSearchJobs(@RequestBody SearchJobsDTO searchJobsDTO){
+        List<JobPost> jobs = jobPostRepo.getSearchJobs(searchJobsDTO.getJobTitle(), searchJobsDTO.getJobType(), searchJobsDTO.getSalary(),searchJobsDTO.getExperience());
+        return new ResponseEntity<>(jobs, HttpStatus.OK);
+
     }
 }

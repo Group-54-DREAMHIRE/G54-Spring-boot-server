@@ -11,4 +11,5 @@ public class InterviewDTO {
     private int duration;
     private String withInt;
     private int jobId;
+    private String meetingLink;
 }

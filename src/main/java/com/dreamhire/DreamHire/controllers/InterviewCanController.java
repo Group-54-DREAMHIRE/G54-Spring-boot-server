@@ -55,7 +55,7 @@ public class InterviewCanController {
         int jobId = getInterviewDTO.getJobId();
         List<Object[]> interviews = interviewCandidateRepo.getScheduledInterviewsById(id, jobId);
         List<ScheduledIntDTO> scheduledInterviews = new ArrayList<ScheduledIntDTO>();
-        System.out.println(scheduledInterviews);
+
         for (Object[] interview : interviews) {
             ScheduledIntDTO scheduledIntDTO = new ScheduledIntDTO();
             scheduledIntDTO.setIntId((int) interview[0]);
@@ -67,6 +67,18 @@ public class InterviewCanController {
             scheduledIntDTO.setCompanyName((String) interview[6]);
             scheduledInterviews.add(scheduledIntDTO);
         }
+        System.out.println(scheduledInterviews);
         return new ResponseEntity<>(scheduledInterviews,HttpStatus.OK);
     }
+
+    @GetMapping("/getInterview/{id}")
+    public ResponseEntity<?> getInterview(@PathVariable int id){
+        if(interviewCandidateRepo.existsByInterviewId(id)){
+            InterviewCandidate interviewCandidate = interviewCandidateRepo.findByInterviewId(id);
+            return new ResponseEntity<>(interviewCandidate, HttpStatus.OK);
+        }else {
+            return  new ResponseEntity<>("Invalid Data", HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }

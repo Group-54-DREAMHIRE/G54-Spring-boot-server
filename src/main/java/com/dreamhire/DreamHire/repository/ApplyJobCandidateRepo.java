@@ -2,6 +2,7 @@ package com.dreamhire.DreamHire.repository;
 
 import com.dreamhire.DreamHire.dto.SendCandidateResumeDTO;
 import com.dreamhire.DreamHire.model.ApplyJobCandidate;
+import com.dreamhire.DreamHire.model.InterviewCandidate;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -21,7 +22,7 @@ public interface ApplyJobCandidateRepo extends JpaRepository<ApplyJobCandidate, 
     List<ApplyJobCandidate> getPendingResumes(int id);
 
     @Modifying
-    @Query(value = "SELECT * FROM apply_job_candidate WHERE candidate_type = 'cansel' AND job_id = :id", nativeQuery = true)
+    @Query(value = "SELECT * FROM apply_job_candidate WHERE candidate_type = 'cancel' AND job_id = :id", nativeQuery = true)
     List<ApplyJobCandidate> getCanceledResumes(int id);
 
     @Modifying
@@ -38,5 +39,11 @@ public interface ApplyJobCandidateRepo extends JpaRepository<ApplyJobCandidate, 
 
     @Query(value = "SELECT * FROM apply_job_candidate WHERE can_id = :id AND job_id = :jobId ",nativeQuery = true)
     ApplyJobCandidate findByCandidateAndJobPostId(int id, int jobId);
+
+    @Query(value = "SELECT COUNT(*) FROM apply_job_candidate WHERE can_id = :id AND job_id = :jobId ",nativeQuery = true)
+    int findByCandidateIdAndAndJobPostId(int id, int jobId);
+
+    @Query(value = "SELECT * FROM apply_job_candidate WHERE can_id = :id AND job_id = :jobId",nativeQuery = true)
+    ApplyJobCandidate findByCandidateIdAndJobId(int id, int jobId);
 
 }

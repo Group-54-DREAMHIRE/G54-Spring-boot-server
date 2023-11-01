@@ -11,10 +11,15 @@ import java.util.List;
 public interface InterviewCandidateRepo extends JpaRepository<InterviewCandidate, Integer> {
     InterviewCandidate findById(int id);
 
-    @Query(value = "SELECT * FROM interview_candidate WHERE can_id = :id AND status= 'accepted';",nativeQuery = true)
+    boolean existsByInterviewId(int id);
+
+    InterviewCandidate findByInterviewId(int id);
+
+    @Query(value = "SELECT * FROM interview_candidate WHERE can_id = :id AND status= 'accepted'",nativeQuery = true)
     List<InterviewCandidate> getAllInterviewsByCandidateId(int id);
 
-    @Query(value = "SELECT INTV.id,INTC.report,INTV.start_time,INTV.duration,INTV.with_int,INTV.type,JP.company_name FROM interview_candidate INTC  JOIN interviews INTV ON INTC.int_id = INTV.id JOIN jobpost JP ON INTV.job_id = JP.id  WHERE INTC.can_id = :id AND INTV.job_id = :jobId AND INTC.status='accepted'; ",nativeQuery = true)
+    @Query(value = "SELECT INTV.id,INTC.report,INTV.start_time,INTV.duration,INTV.with_int,INTV.type,JP.company_name FROM interview_candidate INTC  JOIN interviews INTV ON INTC.int_id = INTV.id JOIN jobpost JP ON INTV.job_id = JP.id  WHERE INTC.can_id = :id AND INTV.job_id = :jobId AND INTC.status='accepted' ",nativeQuery = true)
     List<Object[]> getScheduledInterviewsById(int id, int jobId);
+
 
 }

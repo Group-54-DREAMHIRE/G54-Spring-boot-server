@@ -47,9 +47,12 @@ public class InterviewController {
 
     @PostMapping(path = "/getScheduledTechInterviews/{id}")
     public ResponseEntity<?> getScheduledTechInterviews(@PathVariable int id, @RequestBody GetInterviewDTO getInterview){
-        if(Objects.equals(applyJobCandidateRepo.findByCandidateId(id).getCandidateType().toString(), "shortlist")){
+        System.out.println(1);
+        if(Objects.equals(applyJobCandidateRepo.findByCandidateIdAndJobId(id, getInterview.getJobId()).getCandidateType().toString(), "shortlist")){
+            System.out.println(2);
             if(jobPostRepo.existsById(getInterview.getJobId())){
-                List<Interview >interview = interviewRepo.getTechInterviewByJobPostId(getInterview.getJobId());
+                System.out.println(3);
+                List<Interview>interview = interviewRepo.getTechInterviewByJobPostId(getInterview.getJobId());
                 return new ResponseEntity<>(interview,HttpStatus.OK);
             }else{
                 return new ResponseEntity<>("There is no job post by this id!",HttpStatus.BAD_REQUEST);
@@ -63,9 +66,9 @@ public class InterviewController {
 
     @PostMapping(path = "/getScheduledHrInterviews/{id}")
     public ResponseEntity<?> getScheduledHrTechInterviews(@PathVariable int id, @RequestBody GetInterviewDTO getInterview){
-        if(Objects.equals(applyJobCandidateRepo.findByCandidateId(id).getCandidateType().toString(), "shortlist")){
+        if(Objects.equals(applyJobCandidateRepo.findByCandidateIdAndJobId(id, getInterview.getJobId()).getCandidateType().toString(), "shortlist")){
             if(jobPostRepo.existsById(getInterview.getJobId())){
-                List<Interview >interview = interviewRepo.getTechInterviewByJobPostId(getInterview.getJobId());
+                List<Interview >interview = interviewRepo.getHrInterviewByJobPostId(getInterview.getJobId());
                 return new ResponseEntity<>(interview,HttpStatus.OK);
             }else{
                 return new ResponseEntity<>("There is no job post by this id!",HttpStatus.BAD_REQUEST);
@@ -73,8 +76,16 @@ public class InterviewController {
         }else {
             return new ResponseEntity<>("No Data",HttpStatus.OK);
         }
+    }
 
-
+    @GetMapping("/getInterview/{id}")
+    public ResponseEntity<?> getInterviewDetails(@PathVariable int id){
+        if(interviewRepo.existsById(id)){
+            Interview interview = interviewRepo.findById(id);
+            return new ResponseEntity<>(interview, HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>("Invalid interview id", HttpStatus.BAD_REQUEST);
+        }
     }
 
 }
