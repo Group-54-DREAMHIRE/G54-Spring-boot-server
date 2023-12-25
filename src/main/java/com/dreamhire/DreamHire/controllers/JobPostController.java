@@ -39,8 +39,9 @@ public class JobPostController {
 
     @PostMapping(path = "/save/{id}")
     public ResponseEntity<?> addJobPost (@PathVariable int id, @RequestBody JobPostDTO post){
-        if(jobPostRepo.existsById(id)) {
-            JobPost jobPost = jobPostRepo.findById(id);
+        if(companyRepo.existsById(id)) {
+            JobPost jobPost = new JobPost();
+            jobPost.setCompany(companyRepo.findById(id));
             jobPost.setAuthor(systemUserRepo.findById(post.getSystemUserID()).get().getEmail());
             jobPost.setCompanyName(post.getCompanyName());
             jobPost.setPostedDate(post.getPostedDate());

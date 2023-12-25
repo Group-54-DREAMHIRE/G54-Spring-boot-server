@@ -35,7 +35,7 @@ public class ApplyJobCandidateController {
     public ResponseEntity<?> saveApplyJobCandidate(@PathVariable int id, @RequestBody ApplyJobDTO applyJob){
         ApplyJobCandidate applyJobCandidate = new ApplyJobCandidate(applyJob);
         applyJobCandidate.setAppliedDate(new Date());
-        applyJobCandidate.setCandidateType(CandidateType.pending);
+        applyJobCandidate.setCandidateType(CandidateType.PENDING);
         applyJobCandidate.setJobPost(jobPostRepo.findById(applyJob.getJobID()));
         applyJobCandidate.setCandidate(candidateRepo.findById(id));
         applyJobCandidateRepo.save(applyJobCandidate);
@@ -109,7 +109,7 @@ public class ApplyJobCandidateController {
         if(candidateRepo.existsById(id)){
             int jobId = canselJobDTO.getJobId();
             ApplyJobCandidate applyJobCandidate = applyJobCandidateRepo.findByCandidateAndJobPostId(id,jobId);
-            applyJobCandidate.setCandidateType(CandidateType.valueOf("cancel"));
+            applyJobCandidate.setCandidateType(CandidateType.CANCEL);
             applyJobCandidate.setReason(canselJobDTO.getReason());
             applyJobCandidate.setAppliedDate(new Date());
             applyJobCandidateRepo.save(applyJobCandidate);
@@ -123,7 +123,7 @@ public class ApplyJobCandidateController {
     public ResponseEntity<?> addToRejectList(@RequestBody CanStatusRequestDTO canStatusRequestDTO){
        try{
            ApplyJobCandidate applyJobCandidate = applyJobCandidateRepo.findByCandidateAndJobPostId(canStatusRequestDTO.getCanId(), canStatusRequestDTO.getJobId());
-           applyJobCandidate.setCandidateType(CandidateType.reject);
+           applyJobCandidate.setCandidateType(CandidateType.REJECT);
            applyJobCandidate.setAppliedDate(new Date());
            applyJobCandidateRepo.save(applyJobCandidate);
            SendMailStatusDTO sendMailStatusDTO = new SendMailStatusDTO();
@@ -144,7 +144,7 @@ public class ApplyJobCandidateController {
     public ResponseEntity<?> addToShortList(@RequestBody CanStatusRequestDTO canStatusRequestDTO){
         try{
             ApplyJobCandidate applyJobCandidate = applyJobCandidateRepo.findByCandidateAndJobPostId(canStatusRequestDTO.getCanId(), canStatusRequestDTO.getJobId());
-            applyJobCandidate.setCandidateType(CandidateType.shortlist);
+            applyJobCandidate.setCandidateType(CandidateType.SHORTLIST);
             applyJobCandidate.setAppliedDate(new Date());
             applyJobCandidateRepo.save(applyJobCandidate);
             SendMailStatusDTO sendMailStatusDTO = new SendMailStatusDTO();
@@ -158,14 +158,13 @@ public class ApplyJobCandidateController {
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
-
     }
 
     @PostMapping(path = "/pending")
     public ResponseEntity<?> addToPendingList(@RequestBody CanStatusRequestDTO canStatusRequestDTO){
         try{
             ApplyJobCandidate applyJobCandidate = applyJobCandidateRepo.findByCandidateAndJobPostId(canStatusRequestDTO.getCanId(), canStatusRequestDTO.getJobId());
-            applyJobCandidate.setCandidateType(CandidateType.pending);
+            applyJobCandidate.setCandidateType(CandidateType.PENDING);
             applyJobCandidateRepo.save(applyJobCandidate);
             applyJobCandidate.setAppliedDate(new Date());
             return new ResponseEntity<>("success", HttpStatus.OK);

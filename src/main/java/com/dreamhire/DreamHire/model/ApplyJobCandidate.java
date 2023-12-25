@@ -14,7 +14,7 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity
-@Table(name = "apply_job_Candidate")
+@Table(name = "apply_job_candidate")
 public class ApplyJobCandidate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +29,7 @@ public class ApplyJobCandidate {
     private Candidate candidate;
 
     @Enumerated(value = EnumType.STRING)
-    private CandidateType candidateType=CandidateType.pending;
+    private CandidateType candidateType=CandidateType.PENDING;
     private Date appliedDate;
     @Column(columnDefinition = "TEXT")
     private String reason;

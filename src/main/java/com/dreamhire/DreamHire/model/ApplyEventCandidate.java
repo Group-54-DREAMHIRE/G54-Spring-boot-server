@@ -30,7 +30,7 @@ public class ApplyEventCandidate {
     private Candidate candidate;
 
     @Enumerated(value = EnumType.STRING)
-    private CandidateType candidateType=CandidateType.pending;
+    private CandidateType candidateType=CandidateType.PENDING;
     private String candidateName;
     private String candidatePhone;
     private String candidateEmail;

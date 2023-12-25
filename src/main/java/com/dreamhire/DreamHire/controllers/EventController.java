@@ -50,6 +50,8 @@ public class EventController {
         event.setStartTime(eventDTO.getStartTime());
         event.setEndTime(eventDTO.getEndTime());
         event.setDate(eventDTO.getDate());
+        event.setPhone(eventDTO.getPhone());
+        event.setEmail(eventDTO.getEmail());
         event.setCompany(companyRepo.findById(id));
         eventRepo.save(event);
         return new ResponseEntity<>(event, HttpStatus.OK);
